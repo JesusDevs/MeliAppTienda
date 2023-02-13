@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.meliapp.databinding.ItemContainerBinding
 import com.example.meliapp.utils.loadGif
 import com.example.meliapp.utils.loadImg
@@ -34,7 +35,7 @@ class ProductAdapter(private val items: List<ItemProduct>, private val context: 
                     if (!item.thumbnail.isNullOrEmpty()) {
                         try {
                             if (urlImg.contains(".jpg") || urlImg.contains(".jpeg") || item.thumbnail!!.contains(".png"))
-                            { imagePost.loadImg(item.thumbnail!!) }
+                            { Glide.with(context!!).load(item.thumbnail).into(imagePost)}
                             else if (urlImg.contains(".svg")){
                                 imagePost.loadSvgBeneficios(item.thumbnail!!) }
                             else if (urlImg.contains(".gif")){ imagePost.loadGif(urlImg) }
