@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meliapp.R
 import com.example.meliapp.databinding.FragmentFirstBinding
 
@@ -15,10 +16,9 @@ import com.example.meliapp.databinding.FragmentFirstBinding
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var adapter: ProductAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,11 +32,20 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        //instanciar adapter
+        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
+        adapter = ProductAdapter(mockAdapter(), context)
+        binding.recyclerViewItems.adapter = adapter
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
         }
     }
+      fun mockAdapter(): MutableList<ItemProduct> {
+         var  postItems: MutableList<ItemProduct> = mutableListOf()
+        postItems.add(ItemProduct("1", "Kuervos, ",1000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo"))
+          postItems.add(ItemProduct("1", "Kuervos, ",1000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo"))
+       return postItems
+      }
 
     override fun onDestroyView() {
         super.onDestroyView()
