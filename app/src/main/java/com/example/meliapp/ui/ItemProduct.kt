@@ -9,5 +9,6 @@ data class ItemProduct(
     val title: String? = null,
     val price: Int? = null,
     val thumbnail: String? = null,
-    val condition: String? = null
+    val condition: String? = null,
+    val description : String? = null,
     ) : Parcelable

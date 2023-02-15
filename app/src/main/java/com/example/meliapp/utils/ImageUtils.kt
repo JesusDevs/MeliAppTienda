@@ -44,7 +44,7 @@ fun ImageView.loadSvgBeneficios(url: String) {
 }
 //para koltin Picasso leer imagen jpg o png
 fun ImageView.loadImg(url: String) {
-    Picasso.get().load(url)
+    Picasso.get().load(url).resize(350, 350)
         .error(R.drawable.ic_launcher_background)
         .into(this)
 }

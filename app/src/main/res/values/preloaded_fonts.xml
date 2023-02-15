@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/emblema_one</item>
+        <item>@font/junge</item>
+        <item>@font/lexend_medium</item>
+        <item>@font/sonsie_one</item>
+        <item>@font/trade_winds</item>
+        <item>@font/wallpoet</item>
+    </array>
+</resources>

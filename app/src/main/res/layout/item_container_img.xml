@@ -36,7 +36,7 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,8 +47,10 @@
                 android:id="@+id/slider_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="producto de prueba "
-                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/sonsie_one"
+                android:text="Nombre Banda"
+                android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -57,17 +59,44 @@
 
             <TextView
                 android:id="@+id/slider_item_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/lexend_medium"
+                android:text="titulo disco"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="13dp"
+                app:layout_constraintEnd_toEndOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/slider_item_title" />
+
+            <TextView
+                android:id="@+id/slider_price_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
-                android:text="producto de prueba "
-                android:textAlignment="textStart"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:fontFamily="@font/wallpoet"
+                android:text="10000"
+                android:textAlignment="center"
                 android:textColor="@color/black"
-                android:textSize="12dp"
+                android:textSize="13dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/slider_item_title" />
+                app:layout_constraintTop_toBottomOf="@+id/slider_item_text" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_launcher_foreground" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
