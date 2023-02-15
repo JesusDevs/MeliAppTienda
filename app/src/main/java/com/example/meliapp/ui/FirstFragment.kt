@@ -15,9 +15,6 @@ import com.example.meliapp.ui.sliderviewpager.adapter.RecommendSliderAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.abs
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null

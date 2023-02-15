@@ -20,7 +20,7 @@
             tools:context=".ui.FirstFragment">
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView"
+                android:id="@+id/searchMaterialCardView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"

@@ -10,9 +10,6 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.meliapp.databinding.PaymentFragmentBinding
 import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
 
-/**
- * A simple [Fragment] subclass as the default destination in the navigation.
- */
 class PaymentFragment : Fragment() {
 
     private var _binding: PaymentFragmentBinding? = null
