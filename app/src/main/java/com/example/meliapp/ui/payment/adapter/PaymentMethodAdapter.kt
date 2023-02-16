@@ -50,7 +50,6 @@ class PaymentMethodAdapter(
                             } catch (e: Exception) { e.printStackTrace() } }
                 }
                 itemView.setOnClickListener {
-                    Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
                     selectedItem.value = item
                     selectedListener(item)
                 }

@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.meliapp.R
@@ -52,7 +54,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
         super.onViewCreated(view, savedInstanceState)
         //instanciar adapter
         getPaymentMethods()
-
     }
     private fun getPaymentMethods(){
         lifecycleScope.launch {
@@ -85,7 +86,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
         //eliminar de la lista los que no son credit_card
         listFilter.removeIf { it.paymentTypeId != "credit_card" }
 
-        Log.d("listFilter", "listFilter: ${listFilter}")
+        Log.d("listFilter", "listFilter: $listFilter")
         binding.recyclerViewItems.layoutManager = GridLayoutManager(context, 5)
         adapter = PaymentMethodAdapter(listFilter,context){ select->
             onItemSelected(select)
@@ -97,9 +98,11 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
 
     fun onItemSelected(item: PaymentMethodItem) {
         Log.d("item", "item: ${item}")
-        //navigation
-        //findNavController().navigate(R.id.action_paymentFragment_to_dialogPaymentFragment)
-        //aca llamar al servicio y pasar por bundle el objecto
+        Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
+        //navigation mas bundle para enviar el metodo de pago seleccionado
+
+        //aca llamo al metodo de pago seleccionado
+
     }
     override fun onDestroyView() {
         super.onDestroyView()
