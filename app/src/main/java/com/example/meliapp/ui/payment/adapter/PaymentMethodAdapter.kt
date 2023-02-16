@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.meliapp.databinding.ItemContainerBinding
 import com.example.meliapp.databinding.ItemContainerImgBinding
+import com.example.meliapp.databinding.MethodItemBinding
 import com.example.meliapp.databinding.ShopItemBinding
 import com.example.meliapp.model.payment.PaymentMethodItem
 import com.example.meliapp.ui.ItemProduct
@@ -19,7 +21,7 @@ class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private v
     fun selectedItem()=selectedItem
     private val itemsList: List<PaymentMethodItem> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(ShopItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }
+        return ViewHolder(MethodItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = itemsList[position]
@@ -30,11 +32,11 @@ class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private v
         return itemsList.size
     }
 
-    inner class ViewHolder(private val binding: ShopItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: MethodItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
       fun bindItems(item: PaymentMethodItem) {
             with(binding) {
-                titleTx.text = item.name
+
                 item.thumbnail?.let { urlImg ->
                     if (item.thumbnail.isNotEmpty()) {
                         try {

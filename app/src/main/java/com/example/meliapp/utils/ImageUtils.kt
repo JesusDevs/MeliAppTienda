@@ -46,7 +46,7 @@ fun ImageView.loadImg(url: String) {
         .into(this)
 }
 fun ImageView.loadImgShop(url: String) {
-    Picasso.get().load(url).resize(45, 45)
+    Picasso.get().load(url)
         .error(R.drawable.ic_launcher_background)
         .into(this)
 }
