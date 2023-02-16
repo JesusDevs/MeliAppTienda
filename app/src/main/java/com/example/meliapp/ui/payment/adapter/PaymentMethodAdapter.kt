@@ -3,20 +3,20 @@ package com.example.meliapp.ui.payment.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.example.meliapp.databinding.ItemContainerBinding
-import com.example.meliapp.databinding.ItemContainerImgBinding
 import com.example.meliapp.databinding.MethodItemBinding
-import com.example.meliapp.databinding.ShopItemBinding
 import com.example.meliapp.model.payment.PaymentMethodItem
-import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.utils.loadGif
-import com.example.meliapp.utils.loadImg
 import com.example.meliapp.utils.loadImgShop
 import com.example.meliapp.utils.loadSvgReco
 
-class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private val context: Context?) : RecyclerView.Adapter<PaymentMethodAdapter.ViewHolder>() {
+class PaymentMethodAdapter(
+    private val items: List<PaymentMethodItem>,
+    private val context: Context?,
+    private val selectedListener: (PaymentMethodItem) -> Unit
+) : RecyclerView.Adapter<PaymentMethodAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<PaymentMethodItem>()
     fun selectedItem()=selectedItem
     private val itemsList: List<PaymentMethodItem> =items
@@ -25,7 +25,7 @@ class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private v
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = itemsList[position]
-        holder.bindItems(items)
+        holder.bindItems(items,selectedListener)
     }
 
     override fun getItemCount(): Int {
@@ -34,7 +34,7 @@ class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private v
 
     inner class ViewHolder(private val binding: MethodItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-      fun bindItems(item: PaymentMethodItem) {
+      fun bindItems(item: PaymentMethodItem, selectedListener: (PaymentMethodItem) -> Unit) {
             with(binding) {
 
                 item.thumbnail?.let { urlImg ->
@@ -48,6 +48,11 @@ class PaymentMethodAdapter(private val items: List<PaymentMethodItem>, private v
                                 logoIv.loadGif(urlImg)
                                 }
                             } catch (e: Exception) { e.printStackTrace() } }
+                }
+                itemView.setOnClickListener {
+                    Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
+                    selectedItem.value = item
+                    selectedListener(item)
                 }
             }
         }

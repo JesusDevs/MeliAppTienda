@@ -1,43 +1,27 @@
 package com.example.meliapp.ui.payment.dialog
 
-import android.app.Dialog
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import androidx.viewpager2.widget.ViewPager2
-import cl.wom.transformacion.appwommobile.beneficios.adapter.HorizontalMarginItemDecoration
 import com.example.meliapp.R
 import com.example.meliapp.core.status.Status
-import com.example.meliapp.databinding.FragmentFirstBinding
 import com.example.meliapp.databinding.MethodDialogBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.model.payment.PaymentMethodItem
 import com.example.meliapp.repository.PaymentMethodRepository
-import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.ui.payment.adapter.PaymentMethodAdapter
-import com.example.meliapp.ui.payment.adapter.PaymentShopAdapter
-import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
-import com.example.meliapp.ui.sliderviewpager.adapter.RecommendSliderAdapter
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.abs
 
 class DialogPaymentFragment : BottomSheetDialogFragment(){
 
@@ -55,7 +39,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
                 )
             ) }
 
-    private val paymentMethods by lazy { args.method }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -104,8 +87,19 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
 
         Log.d("listFilter", "listFilter: ${listFilter}")
         binding.recyclerViewItems.layoutManager = GridLayoutManager(context, 5)
-        adapter = PaymentMethodAdapter(listFilter, context)
+        adapter = PaymentMethodAdapter(listFilter,context){ select->
+            onItemSelected(select)
+        }
+
         binding.recyclerViewItems.adapter = adapter
+
+    }
+
+    fun onItemSelected(item: PaymentMethodItem) {
+        Log.d("item", "item: ${item}")
+        //navigation
+        //findNavController().navigate(R.id.action_paymentFragment_to_dialogPaymentFragment)
+        //aca llamar al servicio y pasar por bundle el objecto
     }
     override fun onDestroyView() {
         super.onDestroyView()

@@ -10,7 +10,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meliapp.R
@@ -18,11 +17,9 @@ import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.PaymentFragmentBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.model.payment.PaymentMethodItem
-import com.example.meliapp.repository.IPaymentMethodRepository
 import com.example.meliapp.repository.PaymentMethodRepository
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.ui.payment.adapter.PaymentShopAdapter
-import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

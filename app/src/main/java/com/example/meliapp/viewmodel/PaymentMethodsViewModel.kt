@@ -2,16 +2,12 @@ package com.example.meliapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.example.meliapp.core.status.Response
 import com.example.meliapp.model.payment.PaymentMethodItem
 import com.example.meliapp.repository.IPaymentMethodRepository
-import com.example.meliapp.ui.ItemProduct
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted.Companion.WhileSubscribed
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewModel() {
