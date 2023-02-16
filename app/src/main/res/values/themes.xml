@@ -14,6 +14,48 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="MyButtonTheme" parent="Widget.MaterialComponents.Button">
+        <item name="materialThemeOverlay">@style/ButtonStyleTextColor</item>
+    </style>
+
+    <style name="ButtonStyleTextColor">
+        <item name="colorPrimary">?attr/colorSecondary</item>
+    </style>
+    <style name="Theme.MeliAppAppCompact" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <!-- Stuff to make the bottom sheet with round top borders -->
+    <style name="BottomSheetShapeAppearance" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeTopRight">16dp</item>
+    </style>
+
+    <style name="BottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="shapeAppearance">@style/BottomSheetShapeAppearance</item>
+        <item name="behavior_peekHeight">500dp</item>
+        <item name="behavior_fitToContents">true</item>
+        <item name="behavior_halfExpandedRatio">0.5</item>
+    </style>
+
+    <style name="BaseBottomSheetMenu" parent="Theme.MaterialComponents.DayNight.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="bottomSheetStyle">@style/BottomSheetModal</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+
+    <style name="BottomSheetMenuTheme" parent="@style/BaseBottomSheetMenu" />
     <style name="Theme.MeliApp.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

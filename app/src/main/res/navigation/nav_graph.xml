@@ -30,7 +30,16 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.example.meliapp.ui.PaymentFragment"
+        android:name="com.example.meliapp.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/payment_fragment"/>
+        tools:layout="@layout/payment_fragment">
+        <action
+            android:id="@+id/action_paymentFragment_to_dialogPaymentFragment"
+            app:destination="@id/dialogPaymentFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogPaymentFragment"
+        android:name="com.example.meliapp.ui.payment.dialog.DialogPaymentFragment"
+        android:label="DialogPaymentFragment"
+        tools:layout="@layout/fragment_first"/>
 </navigation>

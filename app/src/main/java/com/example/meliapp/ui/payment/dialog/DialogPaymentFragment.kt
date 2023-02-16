@@ -1,44 +1,71 @@
-package com.example.meliapp.ui
+package com.example.meliapp.ui.payment.dialog
 
+import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.example.meliapp.databinding.PaymentFragmentBinding
+import androidx.viewpager2.widget.ViewPager2
+import cl.wom.transformacion.appwommobile.beneficios.adapter.HorizontalMarginItemDecoration
+import com.example.meliapp.R
+import com.example.meliapp.databinding.FragmentFirstBinding
+import com.example.meliapp.databinding.MethodDialogBinding
+import com.example.meliapp.ui.ItemProduct
+import com.example.meliapp.ui.payment.adapter.PaymentMethodAdapter
 import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
+import com.example.meliapp.ui.sliderviewpager.adapter.RecommendSliderAdapter
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.tabs.TabLayoutMediator
+import kotlin.math.abs
 
-class PaymentFragment : Fragment() {
+class DialogPaymentFragment : BottomSheetDialogFragment(){
 
-    private var _binding: PaymentFragmentBinding? = null
+    private var _binding: MethodDialogBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: ProductAdapter
-
+    private lateinit var adapter: PaymentMethodAdapter
+    private lateinit var adapterRecommned: PaymentMethodAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = PaymentFragmentBinding.inflate(inflater, container, false)
+        _binding = MethodDialogBinding.inflate(inflater, container, false)
         return binding.root
 
     }
-
+    override fun getTheme(): Int = R.style.BottomSheetMenuTheme
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //instanciar adapter
-        binding.recyclerViewItems.layoutManager = GridLayoutManager(context,2)
-        adapter = ProductAdapter(mockAdapter(), context)
+        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
+        adapter = PaymentMethodAdapter(mockAdapter(), context)
         binding.recyclerViewItems.adapter = adapter
 
-           //navigation
-          // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-
     }
-      fun mockAdapter(): MutableList<ItemProduct> {
+
+    private fun transform() : ViewPager2.PageTransformer {
+        val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
+        val currentItemHorizontalMarginPx =
+            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
+        val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
+        val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
+            page.translationX = -pageTranslationX * position
+            // cambio de tamaño item siguiente
+            page.scaleY = 1 - (0.25f * abs(position))
+            // efecto de difuminado en los items
+            //  page.alpha = 0.25f + (1 - abs(position))
+        }
+        return pageTransformer
+    }
+
+    fun mockAdapter(): MutableList<ItemProduct> {
          var  postItems: MutableList<ItemProduct> = mutableListOf()
           postItems.add(ItemProduct("1", "Soda Estereo, ",13000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo","Me verás volver"))
           postItems.add(ItemProduct("2", "Kuervos del sur ",15500,"https://pbs.twimg.com/media/EISqOeyXsAAUgx7.jpg","nuevo","El Vuelo Del Pillán"))
