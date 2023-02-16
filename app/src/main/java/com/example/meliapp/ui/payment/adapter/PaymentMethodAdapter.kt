@@ -17,6 +17,7 @@ class PaymentMethodAdapter(
     private val selectedListener: (PaymentMethodItem) -> Unit
 ) : RecyclerView.Adapter<PaymentMethodAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<PaymentMethodItem>()
+    private var selectedPosition = 0// NEW
     fun selectedItem()=selectedItem
     private val itemsList: List<PaymentMethodItem> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -36,6 +37,11 @@ class PaymentMethodAdapter(
       fun bindItems(item: PaymentMethodItem, selectedListener: (PaymentMethodItem) -> Unit) {
             with(binding) {
 
+                if (selectedPosition == adapterPosition){
+                    chekIv.setImageResource(android.R.drawable.checkbox_on_background)
+                } else {
+                    chekIv.setImageResource(android.R.drawable.checkbox_off_background)
+                }
                 item.thumbnail?.let { urlImg ->
                     if (item.thumbnail.isNotEmpty()) {
                         try {
@@ -49,10 +55,17 @@ class PaymentMethodAdapter(
                             } catch (e: Exception) { e.printStackTrace() } }
                 }
                 itemView.setOnClickListener {
+
+                   if (selectedPosition == RecyclerView.NO_POSITION) {
+                       notifyItemChanged(selectedPosition)
+                       selectedPosition = adapterPosition
+                    }
                     selectedItem.value = item
                     selectedListener(item)
+
                 }
             }
+
         }
 
     }

@@ -12,14 +12,16 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meliapp.R
 import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.MethodDialogBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.model.payment.bank.BankItem
+import com.example.meliapp.model.payment.installments.InstallmentsResponseItem
+import com.example.meliapp.model.payment.installments.PayerCost
 import com.example.meliapp.model.payment.method.PaymentMethodItem
 import com.example.meliapp.repository.PaymentMethodRepository
+import com.example.meliapp.ui.payment.adapter.InstallmentsAdapter
 import com.example.meliapp.ui.payment.adapter.PaymentBankAdapter
 import com.example.meliapp.ui.payment.adapter.PaymentMethodAdapter
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
@@ -27,14 +29,17 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class DialogPaymentFragment : BottomSheetDialogFragment(){
+class DialogPaymentFragment : BottomSheetDialogFragment() {
 
     private var _binding: MethodDialogBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: PaymentMethodAdapter
     private lateinit var adapterBank: PaymentBankAdapter
-    private lateinit var adapterRecommned: PaymentMethodAdapter
+    private lateinit var adapterInstallments: InstallmentsAdapter
     private val args by navArgs<DialogPaymentFragmentArgs>()
+    private var bank: BankItem? = null
+    private var method :PaymentMethodItem? = null
+    private var installments  :InstallmentsResponseItem? = null
 
     private val viewModel by viewModels<PaymentMethodsViewModel>(){
         PaymentMethodsViewModel
@@ -93,7 +98,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
                                 response.data?.let { bank ->
                                     if (bank.isNotEmpty()) {
                                         Log.d("getmethods", "getmethods: ${bank}")
-                                        displayPaymentBank(bank)
+                                       displayPaymentBank(bank)
 
                                     }else{
 
@@ -107,8 +112,32 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
                     }
                 }
         }}
+    private fun getPaymentInstallments(paymentMethod:String, bank:String, amount: Double){
+        lifecycleScope.launch {
+            viewModel.getPaymentInstalment(paymentMethod = paymentMethod, bank = bank, amount = amount).collectLatest { result ->
+                result.let { response ->
+                    when(response.status) {
+                        Status.LOADING -> { }
+                        Status.SUCCESS -> {
+                            response.data?.let { installments ->
+                                if (bank.isNotEmpty()) {
+                                    Log.d("getInstall", "getmethods: ${bank}")
+                                    displayInstallment(installments)
+                                }else{
+
+                                }
+                            }
+                        }
+                        Status.ERROR -> {
+                            Log.d("TAG", "getGames: ${response.message}")
+                        }
+                    }
+                }
+            }
+        }}
     private fun displayPaymentMethods(list : List<PaymentMethodItem>) {
         val listFilter = list as MutableList<PaymentMethodItem>
+
         //eliminar de la lista los que no son credit_card
         listFilter.removeIf { it.paymentTypeId != "credit_card" }
         Log.d("listFilter", "listFilter: $listFilter")
@@ -119,10 +148,8 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
         binding.recyclerViewItems.adapter = adapter
 
     }
-    private fun displayPaymentBank(listbank : List<BankItem>) {
+   private fun displayPaymentBank(listbank : List<BankItem>) {
         val listFilterBank = listbank as MutableList<BankItem>
-        // Filtros de testeo , clean list
-       // listFilterBank.let { it -> it.removeIf {  filtro -> !filtro.name!!.contains("Banco")} }
         listFilterBank.let { it -> it.removeIf {  filtro ->  filtro.thumbnail!!.contains("gif")} }
         binding.recyclerViewBank.layoutManager = GridLayoutManager(context, 2)
         adapterBank = PaymentBankAdapter(listFilterBank,context){ select->
@@ -131,16 +158,34 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
 
         binding.recyclerViewBank.adapter = adapterBank
     }
-
+    private fun displayInstallment(listInstallments : List<InstallmentsResponseItem>) {
+        val listPayerCost = listInstallments[0].payerCosts as MutableList<PayerCost>
+        binding.materialCardViewBank.visibility = View.GONE
+        binding.recyclerViewInstalments.layoutManager = GridLayoutManager(context, 2)
+        adapterInstallments = InstallmentsAdapter(listPayerCost,context){ select->
+           onInstallmentSelected(select)
+        }
+        binding.recyclerViewInstalments.adapter = adapterInstallments
+    }
     fun onItemSelected(item: PaymentMethodItem) {
         Log.d("item", "item: ${item}")
         Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
+        method = item
+        binding.materialCardViewBank.visibility = View.VISIBLE
+        binding.materialCardViewInstalments.visibility = View.GONE
         item.id?.let { getPaymentMBanks(it) }
     }
 
     fun onBankSelected(item: BankItem) {
         Log.d("item", "item: ${item}")
         Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
+        binding.materialCardViewInstalments.visibility = View.VISIBLE
+        bank = item
+        method?.id?.let { method -> bank?.id?.let { bank -> getPaymentInstallments(method, bank = bank , 1000.0) } }
+    }
+    fun onInstallmentSelected(item: PayerCost) {
+        Log.d("item", "item: ${item}")
+        Toast.makeText(context, item.recommendedMessage, Toast.LENGTH_SHORT).show()
     }
     override fun onDestroyView() {
         super.onDestroyView()

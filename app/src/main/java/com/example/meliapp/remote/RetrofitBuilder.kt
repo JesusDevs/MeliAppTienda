@@ -1,7 +1,6 @@
 package com.example.meliapp.remote
 
 import com.example.meliapp.remote.interceptors.ErrorInterceptor
-import com.example.meliapp.remote.interceptors.IPaymentService
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

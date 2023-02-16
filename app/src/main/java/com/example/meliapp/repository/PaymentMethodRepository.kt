@@ -4,6 +4,7 @@ package com.example.meliapp.repository
 
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.model.payment.bank.BankItem
+import com.example.meliapp.model.payment.installments.InstallmentsResponseItem
 import com.example.meliapp.model.payment.method.PaymentMethodItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -18,6 +19,12 @@ class PaymentMethodRepository(private val dataSource: PaymentMethodDataSource): 
     override suspend fun getPaymentBank(paymentMethod :String): List<BankItem> {
         return withContext(Dispatchers.IO) {
             return@withContext dataSource.getPaymentBank(paymentMethod = paymentMethod)
+        }
+    }
+
+    override suspend fun getInstallments(paymentMethod: String, bank: String, amount: Double): List<InstallmentsResponseItem> {
+        return withContext(Dispatchers.IO) {
+            return@withContext dataSource.getPaymentInstallment(paymentMethod = paymentMethod, bank = bank, amount = amount)
         }
     }
 }

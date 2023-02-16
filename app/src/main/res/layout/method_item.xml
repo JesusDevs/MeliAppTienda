@@ -7,11 +7,13 @@
 
     <com.google.android.material.card.MaterialCardView
 
+        android:id="@+id/materialCardView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardElevation="3dp"
         app:cardUseCompatPadding="true"
+        android:padding="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,12 +21,21 @@
 
         <ImageView
             android:id="@+id/logoIv"
-            android:src="@drawable/ic_launcher_background"
             android:layout_width="wrap_content"
-            android:minWidth="100dp"
             android:layout_height="wrap_content"
-            android:scaleType="centerInside" />
+            android:minWidth="100dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_launcher_background" />
 
+        <ImageView
+            android:id="@+id/chekIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:srcCompat="@drawable/baseline_keyboard_double_arrow_up_24"
+            tools:layout_editor_absoluteX="14dp" />
     </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
 

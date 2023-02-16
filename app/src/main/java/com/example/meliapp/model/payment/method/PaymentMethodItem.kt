@@ -35,5 +35,7 @@ data class PaymentMethodItem(
     @SerializedName("status")
     val status: String? = null,
     @SerializedName("thumbnail")
-    val thumbnail: String? = null
+    val thumbnail: String? = null,
+    @SerializedName("is_selected")
+    var isSelected: Boolean = false,
 ) : Parcelable
