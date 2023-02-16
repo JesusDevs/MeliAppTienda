@@ -45,8 +45,8 @@ class DialogPaymentFragment : BottomSheetDialogFragment(){
         super.onViewCreated(view, savedInstanceState)
         //instanciar adapter
         binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
-        adapter = PaymentMethodAdapter(mockAdapter(), context)
-        binding.recyclerViewItems.adapter = adapter
+       // adapter = PaymentMethodAdapter(mockAdapter(), context)
+//        binding.recyclerViewItems.adapter = adapter
 
     }
 

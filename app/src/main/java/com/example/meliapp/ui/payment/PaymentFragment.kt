@@ -1,31 +1,48 @@
 package com.example.meliapp.ui.payment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.meliapp.R
+import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.PaymentFragmentBinding
+import com.example.meliapp.datasource.PaymentMethodDataSource
+import com.example.meliapp.model.payment.PaymentMethodItem
+import com.example.meliapp.repository.IPaymentMethodRepository
+import com.example.meliapp.repository.PaymentMethodRepository
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.ui.payment.adapter.PaymentShopAdapter
 import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
+import com.example.meliapp.viewmodel.PaymentMethodsViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class PaymentFragment : Fragment() {
 
     private var _binding: PaymentFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: PaymentShopAdapter
-
+   //instanciar viewmodel
+    private val viewModel by viewModels<PaymentMethodsViewModel>(){
+        PaymentMethodsViewModel
+            .PaymentViewModelFactory(
+                PaymentMethodRepository(
+                    PaymentMethodDataSource())) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = PaymentFragmentBinding.inflate(inflater, container, false)
         return binding.root
 
@@ -33,20 +50,24 @@ class PaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //instanciar adapter
-        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
-        adapter = PaymentShopAdapter(mockAdapter(), context)
-        binding.recyclerViewItems.adapter = adapter
-
+        getPaymentMethods()
         binding.button.setOnClickListener {
             //navigation
             findNavController().navigate(R.id.action_paymentFragment_to_dialogPaymentFragment)
+            //aca llamar al servicio y pasar por bundle el objecto
         }
            //navigation
           // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
 
     }
-      fun mockAdapter(): MutableList<ItemProduct> {
+
+    private fun displayPaymentMethods(list : List<PaymentMethodItem>) {
+        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
+        adapter = PaymentShopAdapter(mockAdapter(), context)
+        binding.recyclerViewItems.adapter = adapter
+    }
+
+    fun mockAdapter(): MutableList<ItemProduct> {
          var  postItems: MutableList<ItemProduct> = mutableListOf()
           postItems.add(ItemProduct("1", "Soda Estereo, ",13000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo","Me verás volver"))
           postItems.add(ItemProduct("2", "Kuervos del sur ",15500,"https://pbs.twimg.com/media/EISqOeyXsAAUgx7.jpg","nuevo","El Vuelo Del Pillán"))
@@ -58,7 +79,32 @@ class PaymentFragment : Fragment() {
           postItems.add(ItemProduct("8", "Second ",10000,"https://www.lahiguera.net/musicalia/artistas/second/disco/5239/second_montana_rusa-portada.jpg","nuevo","Montana Rusa"))
           return postItems
       }
+    private fun getPaymentMethods(){
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                viewModel.getPaymentMethods().collectLatest { result ->
+                    result.let { response ->
+                        when(response.status) {
+                            Status.LOADING -> { }
+                            Status.SUCCESS -> {
+                                response.data?.let { method ->
+                                    if (method.isNotEmpty()) {
+                                        Log.d("getmethods", "getmethods: ${method}")
+                                        displayPaymentMethods(method)
 
+                                    }else{
+
+                                    }
+                                }
+                            }
+                            Status.ERROR -> {
+                                Log.d("TAG", "getGames: ${response.message}")
+                            }
+                        }
+                    }
+                }
+            }
+        }}
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

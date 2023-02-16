@@ -4,6 +4,7 @@ import com.example.meliapp.model.payment.PaymentMethodItem
 
 
 interface IPaymentMethodRepository {
-    suspend fun getLatesGames(): List<PaymentMethodItem>
+    suspend fun getPaymentMethods(): List<PaymentMethodItem>
+
 
 }

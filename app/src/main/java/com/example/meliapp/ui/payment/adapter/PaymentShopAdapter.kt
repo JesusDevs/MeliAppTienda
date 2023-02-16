@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.meliapp.databinding.ItemContainerImgBinding
 import com.example.meliapp.databinding.ShopItemBinding
+import com.example.meliapp.model.payment.PaymentMethodItem
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.utils.loadGif
 import com.example.meliapp.utils.loadImg

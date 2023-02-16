@@ -10,4 +10,6 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="what_do_you_want_to_pay">¿Qué quieres Pagar?</string>
+    <string name="c_mo_quieres_pagar">¿Cómo quieres pagar?</string>
+    <string name="mercado_pago">Mercado Pago</string>
 </resources>

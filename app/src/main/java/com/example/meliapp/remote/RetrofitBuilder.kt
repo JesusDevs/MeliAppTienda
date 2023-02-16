@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitBuilder {
 
     companion object{
-        private const val BASE_URL = "https://api.mercadopago.com/v1"
+        private const val BASE_URL = "https://api.mercadopago.com/v1/"
                 fun getRetrofitInstance(): IPaymentService {
                     val logger = HttpLoggingInterceptor()
                     logger.level = HttpLoggingInterceptor.Level.BODY

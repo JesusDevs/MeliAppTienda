@@ -9,7 +9,7 @@ class PaymentMethodDataSource {
     private var listPaymentMethod: List<PaymentMethodItem>? = null
     suspend fun getPaymentMethods() :List<PaymentMethodItem> {
         try { val response = RetrofitBuilder.getRetrofitInstance()
-                .getPaymentMethods("credit_card", "444a9ef5-8a6b-429f-abdf-587639155d88")
+                .getPaymentMethods("444a9ef5-8a6b-429f-abdf-587639155d88")
             if (response.isSuccessful) {
                 listPaymentMethod = response.body()!!
             } else {
