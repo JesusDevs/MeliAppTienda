@@ -50,8 +50,14 @@ fun ImageView.loadImgShop(url: String) {
         .error(R.drawable.ic_launcher_background)
         .into(this)
 }
+fun ImageView.loadImgBank(url: String) {
+    Picasso.get().load(url).resize(150, 65)
+        .centerInside()
+        .error(R.drawable.ic_launcher_background)
+        .into(this)
+}
 fun ImageView.loadGif(url: String) {
-    Glide.with(context!!).asGif().load(url).centerCrop().override(350,350).into(this)
+    Glide.with(context!!).asGif().load(url).override(150,65).into(this)
 }
 //metodo para java
 fun ImageSvgNews(context: Context ,url: String,imageView: ImageView ,placeHolder :Int ) {

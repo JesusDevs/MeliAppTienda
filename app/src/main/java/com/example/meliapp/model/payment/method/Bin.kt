@@ -1,4 +1,4 @@
-package com.example.meliapp.model.payment
+package com.example.meliapp.model.payment.method
 
 
 import com.google.gson.annotations.SerializedName

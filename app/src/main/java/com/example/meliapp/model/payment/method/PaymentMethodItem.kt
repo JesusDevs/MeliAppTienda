@@ -1,8 +1,7 @@
-package com.example.meliapp.model.payment
+package com.example.meliapp.model.payment.method
 
 
 import android.os.Parcelable
-import com.example.meliapp.model.payment.Setting
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue

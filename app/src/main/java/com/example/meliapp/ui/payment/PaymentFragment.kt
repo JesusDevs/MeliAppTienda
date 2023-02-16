@@ -16,7 +16,7 @@ import com.example.meliapp.R
 import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.PaymentFragmentBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
-import com.example.meliapp.model.payment.PaymentMethodItem
+import com.example.meliapp.model.payment.method.PaymentMethodItem
 import com.example.meliapp.repository.PaymentMethodRepository
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.ui.payment.adapter.PaymentShopAdapter

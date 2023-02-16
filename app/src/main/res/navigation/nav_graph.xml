@@ -44,7 +44,7 @@
         tools:layout="@layout/method_dialog">
         <argument
             android:name="method"
-            app:argType="com.example.meliapp.model.payment.PaymentMethodItem"
+            app:argType="com.example.meliapp.model.payment.method.PaymentMethodItem"
             app:nullable="true"
             android:defaultValue="@null" />
     </dialog>
