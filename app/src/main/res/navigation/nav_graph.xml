@@ -17,6 +17,11 @@
         <action
             android:id="@+id/action_FirstFragment_to_paymentFragment"
             app:destination="@id/paymentFragment" />
+        <argument
+            android:name="purchase"
+            app:argType="com.example.meliapp.model.payment.PurchaseItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/SecondFragment"
@@ -30,7 +35,33 @@
     </fragment>
     <fragment
         android:id="@+id/paymentFragment"
-        android:name="com.example.meliapp.ui.PaymentFragment"
+        android:name="com.example.meliapp.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
-        tools:layout="@layout/payment_fragment"/>
+        tools:layout="@layout/payment_fragment">
+        <action
+            android:id="@+id/action_paymentFragment_to_dialogPaymentFragment"
+            app:destination="@id/dialogPaymentFragment" />
+        <argument
+            android:name="product"
+            app:argType="com.example.meliapp.ui.ItemProduct"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogPaymentFragment"
+        android:name="com.example.meliapp.ui.payment.dialog.DialogPaymentFragment"
+        android:label="DialogPaymentFragment"
+        tools:layout="@layout/method_dialog">
+        <argument
+            android:name="method"
+            app:argType="com.example.meliapp.model.payment.method.PaymentMethodItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_dialogPaymentFragment_to_FirstFragment"
+            app:destination="@id/FirstFragment" />
+        <argument
+            android:name="price"
+            app:argType="integer" />
+    </dialog>
 </navigation>

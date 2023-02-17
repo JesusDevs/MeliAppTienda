@@ -5,15 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.meliapp.databinding.ItemContainerImgBinding
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.utils.loadGif
 import com.example.meliapp.utils.loadImg
-import com.example.meliapp.utils.loadSvgBeneficios
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.meliapp.utils.loadSvgReco
 
 class ProductAdapter(private val items: List<ItemProduct>, private val context: Context?) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<ItemProduct>()
@@ -42,7 +38,7 @@ class ProductAdapter(private val items: List<ItemProduct>, private val context: 
                             if (urlImg.contains(".jpg") || urlImg.contains(".jpeg") || item.thumbnail!!.contains(".png")) {
                                     imagePost.loadImg(item.thumbnail)
                                 } else if (urlImg.contains(".svg")) {
-                                    imagePost.loadSvgBeneficios(item.thumbnail!!)
+                                    imagePost.loadSvgReco(item.thumbnail!!)
                                 } else if (urlImg.contains(".gif")) {
                                     imagePost.loadGif(urlImg)
                                 }

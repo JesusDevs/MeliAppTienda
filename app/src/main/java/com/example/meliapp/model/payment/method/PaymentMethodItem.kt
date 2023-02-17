@@ -1,4 +1,4 @@
-package com.example.meliapp.model
+package com.example.meliapp.model.payment.method
 
 
 import android.os.Parcelable
@@ -35,5 +35,7 @@ data class PaymentMethodItem(
     @SerializedName("status")
     val status: String? = null,
     @SerializedName("thumbnail")
-    val thumbnail: String? = null
+    val thumbnail: String? = null,
+    @SerializedName("is_selected")
+    var isSelected: Boolean = false,
 ) : Parcelable

@@ -8,4 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="purple_btn_select">#7B2583</color>
+    <color name="gris_background">#F7F7F7</color>
 </resources>
