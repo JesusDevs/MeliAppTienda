@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
     android:layout_height="wrap_content"
     tools:context=".ui.FirstFragment">
 
@@ -19,7 +18,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.FirstFragment">
 
             <com.google.android.material.card.MaterialCardView
@@ -42,6 +41,7 @@
                         android:layout_height="wrap_content"
                         android:src="@drawable/baseline_keyboard_double_arrow_up_24"
                         app:layout_constraintEnd_toEndOf="parent"
+                        android:rotation="180"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -112,6 +112,7 @@
                 app:cardCornerRadius="10dp"
                 app:cardElevation="22dp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/materialCardViewPayment">
 
@@ -134,15 +135,15 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginBottom="24dp"
                 android:padding="5dp"
+                android:layout_marginBottom="20dp"
                 android:visibility="gone"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="22dp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardViewBank">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardViewBank"
+                tools:visibility="visible">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewInstalments"
@@ -153,7 +154,27 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="15dp" />
 
+
+
+
             </com.google.android.material.card.MaterialCardView>
+
+            <Button
+                android:id="@+id/pay_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                style="@style/MyButtonTheme"
+                android:layout_marginEnd="32dp"
+                android:text="Pagar"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/materialCardViewInstalments" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

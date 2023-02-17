@@ -1,17 +1,23 @@
 package com.example.meliapp.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import cl.wom.transformacion.appwommobile.beneficios.adapter.HorizontalMarginItemDecoration
 import com.example.meliapp.R
 import com.example.meliapp.databinding.FragmentFirstBinding
+import com.example.meliapp.model.payment.PurchaseItem
 import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
 import com.example.meliapp.ui.sliderviewpager.adapter.RecommendSliderAdapter
+import com.example.meliapp.utils.AdministradorPreferencias
+import com.example.meliapp.utils.CacheUtilShared
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.abs
 
@@ -21,20 +27,39 @@ class FirstFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: ProductAdapter
     private lateinit var adapterRecommned: RecommendSliderAdapter
+    private var adm :AdministradorPreferencias? = null
+    private var namebank :String? =null
+    private var installments  :String? =null
+    private var payment :String? =null
+    private var amount  :String? =null
+    private val purchaseItem by lazy { args.purchase }
+    private val args by navArgs<FirstFragmentArgs>()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            namebank = it.getString("bank")
+            installments = it.getString("installments")
+            payment = it.getString("payment")
+            amount = it.getDouble("amount",0.0).toString()
+            Toast.makeText(context, amount +"jaja" + installments, Toast.LENGTH_LONG).show()
+        }
+        //crear dialog
+
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //instanciar adapter
+
         binding.recyclerViewItems.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapter = ProductAdapter(mockAdapter(), context)
         binding.recyclerViewItems.adapter = adapter
@@ -47,8 +72,6 @@ class FirstFragment : Fragment() {
         TabLayoutMediator(tab,viewPager){tab, position ->}.attach()
         val decoration = context?.let { HorizontalMarginItemDecoration(it, R.dimen.viewpager_current_item_horizontal_margin) }
         viewPager.addItemDecoration(decoration!!)
-           //navigation
-          // findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
     }
 
     private fun transform() : ViewPager2.PageTransformer {

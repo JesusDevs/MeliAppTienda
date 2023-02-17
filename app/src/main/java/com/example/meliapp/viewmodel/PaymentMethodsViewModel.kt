@@ -1,9 +1,8 @@
 package com.example.meliapp.viewmodel
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.meliapp.core.status.Response
+import com.example.meliapp.model.payment.PurchaseItem
 import com.example.meliapp.model.payment.bank.BankItem
 import com.example.meliapp.model.payment.installments.InstallmentsResponseItem
 import com.example.meliapp.model.payment.method.PaymentMethodItem
@@ -13,6 +12,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewModel() {
+
+
+    private val purchaseItem = MutableLiveData<PurchaseItem>().apply {
+        value = PurchaseItem("Soda","",102.0,"0.0",0)
+    }
+    val text: LiveData<PurchaseItem> = purchaseItem
 
     suspend fun getPaymentMethods() : StateFlow<Response<List<PaymentMethodItem>>> = flow {
         kotlin.runCatching {
@@ -55,6 +60,7 @@ class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewM
         started = WhileSubscribed(5000), // Or Lazily because it's a one-shot
         initialValue = Response.loading(data = null)
     )
+
 
     class PaymentViewModelFactory(private val repo: IPaymentMethodRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

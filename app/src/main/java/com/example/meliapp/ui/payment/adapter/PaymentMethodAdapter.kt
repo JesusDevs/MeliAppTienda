@@ -14,30 +14,37 @@ import com.example.meliapp.utils.loadSvgReco
 class PaymentMethodAdapter(
     private val items: List<PaymentMethodItem>,
     private val context: Context?,
-    private val selectedListener: (PaymentMethodItem) -> Unit
+    private val selectedListener: (PaymentMethodItem) -> Unit,
+    private var selectedPosition: (Int)->Unit
 ) : RecyclerView.Adapter<PaymentMethodAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<PaymentMethodItem>()
-    private var selectedPosition = 0// NEW
-    fun selectedItem()=selectedItem
+    private var selected = -1
     private val itemsList: List<PaymentMethodItem> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(MethodItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val items = itemsList[position]
-        holder.bindItems(items,selectedListener)
+        holder.bindItems(items,selectedListener,selectedPosition)
     }
 
     override fun getItemCount(): Int {
         return itemsList.size
     }
-
+    fun setSelection(position: Int) {
+        selected = position
+        notifyDataSetChanged()
+    }
     inner class ViewHolder(private val binding: MethodItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-      fun bindItems(item: PaymentMethodItem, selectedListener: (PaymentMethodItem) -> Unit) {
+      fun bindItems(
+          item: PaymentMethodItem,
+          selectedListener: (PaymentMethodItem) -> Unit,
+          selectedPosition: (Int) -> Unit
+      ) {
             with(binding) {
 
-                if (selectedPosition == adapterPosition){
+                if (selected == adapterPosition){
                     chekIv.setImageResource(android.R.drawable.checkbox_on_background)
                 } else {
                     chekIv.setImageResource(android.R.drawable.checkbox_off_background)
@@ -55,13 +62,11 @@ class PaymentMethodAdapter(
                             } catch (e: Exception) { e.printStackTrace() } }
                 }
                 itemView.setOnClickListener {
-
-                   if (selectedPosition == RecyclerView.NO_POSITION) {
-                       notifyItemChanged(selectedPosition)
-                       selectedPosition = adapterPosition
-                    }
                     selectedItem.value = item
+                    selectedPosition(adapterPosition)
                     selectedListener(item)
+                    notifyItemChanged(adapterPosition)
+
 
                 }
             }
