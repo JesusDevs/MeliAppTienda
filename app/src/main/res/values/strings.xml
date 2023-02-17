@@ -12,5 +12,6 @@
     <string name="what_do_you_want_to_pay">¿Qué quieres Pagar?</string>
     <string name="c_mo_quieres_pagar">¿Cómo quieres pagar?</string>
     <string name="mercado_pago">Mercado Pago</string>
-    <string name="payment_successo">"Tu pago se ha realizado con éxito"</string>
+    <string name="payment_successo">"Pago realizado con éxito"</string>
+    <string name="ir_a_pagar">Ir a Pagar</string>
 </resources>

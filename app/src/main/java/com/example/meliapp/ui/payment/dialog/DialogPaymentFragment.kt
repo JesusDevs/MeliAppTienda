@@ -41,57 +41,43 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
     private lateinit var adapterBank: PaymentBankAdapter
     private lateinit var adapterInstallments: InstallmentsAdapter
     private val args by navArgs<DialogPaymentFragmentArgs>()
+    private val price by lazy { args.price }
     private var bank: BankItem? = null
     private var method: PaymentMethodItem? = null
     private var installments: PayerCost? = null
-        private var purchaseItem: PurchaseItem? = null
-    private var adm: AdministradorPreferencias? = null
-    //crear mapa de datos
-    private var mapPurchase = HashMap<String, String>()
-   var  bundlePurchase = Bundle()
-
-
-
+    var bundlePurchase = Bundle()
     private val viewModel by viewModels<PaymentMethodsViewModel>() {
         PaymentMethodsViewModel
             .PaymentViewModelFactory(
                 PaymentMethodRepository(
-                    PaymentMethodDataSource()
-                )
-            )
+                    PaymentMethodDataSource()))
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+           price?.let {
+               Log.d("price", "onCreate: $it")
+           }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = MethodDialogBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun getTheme(): Int = R.style.BottomSheetMenuTheme
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //instanciar adapter
-        //instanciar administardor de prefewrences
-
-        adm = AdministradorPreferencias(context)
-        //
-
         binding.payBtn.visibility = View.VISIBLE
         binding.payBtn.isEnabled = false
         getPaymentMethods()
         binding.payBtn.setOnClickListener {
-
-
             //ir al primer fragment con bundle purchase
             findNavController().navigate(R.id.action_dialogPaymentFragment_to_FirstFragment,bundlePurchase)
-            Log.d("bundle", "onViewCreated: ${bundlePurchase}")
             dismiss()
-
-            //Toast.makeText(requireContext(), "Pago realizado con éxito ${Gson().toJson(PurchaseItem)}", Toast.LENGTH_SHORT).show()
             displayToast(R.string.payment_successo)
         }
     }
@@ -196,7 +182,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
 
         //eliminar de la lista los que no son credit_card
         listFilter.removeIf { it.paymentTypeId != "credit_card" }
-        Log.d("listFilter", "listFilter: $listFilter")
 
         binding.recyclerViewItems.layoutManager = GridLayoutManager(context, 5)
         adapter = PaymentMethodAdapter(items = listFilter, context = context,
@@ -257,7 +242,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
      */
     private fun onItemSelected(item: PaymentMethodItem) {
         Log.d("item", "item: $item")
-        Toast.makeText(context, item.name, Toast.LENGTH_SHORT).show()
         method = item
         binding.materialCardViewBank.visibility = View.VISIBLE
         binding.materialCardViewInstalments.visibility = View.GONE
@@ -274,10 +258,10 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
             bank?.id?.let { bank ->
                 getPaymentInstallments(
                     method, bank = bank,
-                    amount = 1000.0)
+                    amount = price.toDouble())
             }
         }
-        bundlePurchase.putDouble("amount", 1000.0)
+        bundlePurchase.putDouble("amount", price.toDouble())
         bundlePurchase.putString("bank", item.name)
     }
 

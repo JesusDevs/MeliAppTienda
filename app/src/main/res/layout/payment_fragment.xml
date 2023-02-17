@@ -91,7 +91,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="32dp"
                 android:layout_marginEnd="24dp"
                 android:paddingStart="0dp"
                 android:paddingEnd="15dp"
@@ -99,22 +98,50 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
+                tools:layout_editor_absoluteY="705dp" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/button"
+                style="@style/MyButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                style="@style/MyButtonTheme"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
                 android:text="Selecciona un Medio de Pago"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardAmount" />
+                app:layout_constraintTop_toBottomOf="@+id/cardItem" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardItem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardAmount">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/shape_card_amount"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <include
+                        android:id="@+id/cardItemInclude"
+                        layout="@layout/layout_item_product"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20dp" />
+                </LinearLayout>
+
+
+            </com.google.android.material.card.MaterialCardView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>

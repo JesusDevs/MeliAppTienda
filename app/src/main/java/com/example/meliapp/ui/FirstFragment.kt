@@ -42,17 +42,14 @@ class FirstFragment : Fragment() {
             installments = it.getString("installments")
             payment = it.getString("payment")
             amount = it.getDouble("amount",0.0).toString()
-            Toast.makeText(context, amount +"jaja" + installments, Toast.LENGTH_LONG).show()
         }
-        //crear dialog
-
+        if (arguments != null && !amount.equals("0.0")) {
+            Toast.makeText(context, amount + installments, Toast.LENGTH_LONG).show()}
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -64,11 +61,12 @@ class FirstFragment : Fragment() {
         adapter = ProductAdapter(mockAdapter(), context)
         binding.recyclerViewItems.adapter = adapter
 
-        adapterRecommned = RecommendSliderAdapter(mockAdapter(),context)
+        adapterRecommned = RecommendSliderAdapter(mockAdapter(),context,this)
         val tab =binding.include.tabLayout
         val viewPager = binding.include.viewpager2
         viewPager.adapter = adapterRecommned
         viewPager.setPageTransformer(transform())
+        viewPager.offscreenPageLimit = 3
         TabLayoutMediator(tab,viewPager){tab, position ->}.attach()
         val decoration = context?.let { HorizontalMarginItemDecoration(it, R.dimen.viewpager_current_item_horizontal_margin) }
         viewPager.addItemDecoration(decoration!!)
