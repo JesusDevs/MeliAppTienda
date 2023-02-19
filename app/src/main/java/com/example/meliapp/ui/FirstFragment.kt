@@ -1,6 +1,7 @@
 package com.example.meliapp.ui
 
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -39,27 +41,10 @@ class FirstFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            namebank = it.getString("bank")
-            installments = it.getString("installments")
-            payment = it.getString("payment")
-            amount = it.getDouble("amount",0.0).toString()
-        }
-
-        if (arguments != null && !amount.equals("0.0")) {
-            //handler postdelayed para que se ejecute despues de que se cargue la vista
-            android.os.Handler(Looper.getMainLooper()).postDelayed({
-                Toast.makeText(
-                    context,
-                    "monto pagado : " + amount + "\n" +
-                            "Banco : " + namebank + "\n" +
-                            "Cuotas : " + installments+ "\n" +
-                            "Medio de pago : " + payment
-                    , Toast.LENGTH_LONG
-                ).show()
-            }, 800)
-        }
+        getArgs()
+        displayToastPurchase()
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -84,6 +69,23 @@ class FirstFragment : Fragment() {
         TabLayoutMediator(tab,viewPager){tab, position ->}.attach()
         val decoration = context?.let { HorizontalMarginItemDecoration(it, R.dimen.viewpager_current_item_horizontal_margin) }
         viewPager.addItemDecoration(decoration!!)
+        searchProducts()
+    }
+
+    private fun searchProducts() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val list =
+                    mockAdapter().filter { it.title?.contains(newText.toString(), true) ?: false }
+                list.forEach { Log.d("TAG", "onQueryTextChange: ${it.title}") }
+                adapter.updateList(list as MutableList<ItemProduct>)
+                return false
+            }
+        })
     }
 
     private fun transform() : ViewPager2.PageTransformer {
@@ -117,5 +119,28 @@ class FirstFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+    private fun getArgs() {
+        arguments?.let {
+            namebank = it.getString("bank")
+            installments = it.getString("installments")
+            payment = it.getString("payment")
+            amount = it.getDouble("amount", 0.0).toString()
+        }
+    }
+
+    private fun displayToastPurchase() {
+        if (arguments != null && !amount.equals("0.0")) {
+            //handler postdelayed para que se ejecute despues de que se cargue la vista
+            Handler(Looper.getMainLooper()).postDelayed({
+                Toast.makeText(
+                    context,
+                    "monto pagado : " + amount + "\n" +
+                            "Banco : " + namebank + "\n" +
+                            "Cuotas : " + installments + "\n" +
+                            "Medio de pago : " + payment, Toast.LENGTH_LONG
+                ).show()
+            }, 800)
+        }
     }
 }
