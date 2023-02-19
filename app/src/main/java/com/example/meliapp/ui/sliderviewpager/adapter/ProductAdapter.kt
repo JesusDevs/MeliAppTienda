@@ -11,10 +11,10 @@ import com.example.meliapp.utils.loadGif
 import com.example.meliapp.utils.loadImg
 import com.example.meliapp.utils.loadSvgReco
 
-class ProductAdapter(private val items: List<ItemProduct>, private val context: Context?) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class ProductAdapter(var items: MutableList<ItemProduct>, private val context: Context?) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<ItemProduct>()
     fun selectedItem()=selectedItem
-    private val itemsList: List<ItemProduct> =items
+    val itemsList: List<ItemProduct> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ItemContainerImgBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }
 
@@ -25,6 +25,12 @@ class ProductAdapter(private val items: List<ItemProduct>, private val context: 
 
     override fun getItemCount(): Int {
         return itemsList.size
+    }
+
+    fun updateList(list: MutableList<ItemProduct>) {
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
     }
 
     inner class ViewHolder(private val binding: ItemContainerImgBinding) : RecyclerView.ViewHolder(binding.root) {
