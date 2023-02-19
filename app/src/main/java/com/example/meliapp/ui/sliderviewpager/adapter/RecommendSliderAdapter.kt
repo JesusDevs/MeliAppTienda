@@ -14,7 +14,7 @@ import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.utils.loadImg
 
 
-class RecommendSliderAdapter(private val items: List<ItemProduct>, private val context: Context?,val frg: Fragment?) : RecyclerView.Adapter<RecommendSliderAdapter.ViewHolder>() {
+class RecommendSliderAdapter(private val items: MutableList<ItemProduct>, private val context: Context?,val frg: Fragment?) : RecyclerView.Adapter<RecommendSliderAdapter.ViewHolder>() {
     private val newListBenefcios: List<ItemProduct> = items
     private var selectedItem = MutableLiveData<ItemProduct>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -29,7 +29,11 @@ class RecommendSliderAdapter(private val items: List<ItemProduct>, private val c
     override fun getItemCount(): Int {
        return newListBenefcios.size
     }
-
+    fun updateList(list: MutableList<ItemProduct>) {
+        items.clear()
+        items.addAll(list)
+        notifyDataSetChanged()
+    }
     inner class ViewHolder(private val binding : LayoutItemProductBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bindItems(item: ItemProduct) {
