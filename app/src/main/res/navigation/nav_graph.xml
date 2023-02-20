@@ -54,6 +54,11 @@
         <argument
             android:name="price"
             app:argType="integer" />
+        <argument
+            android:name="purchase"
+            app:argType="com.example.meliapp.model.payment.PurchaseItem"
+            app:nullable="true"
+            android:defaultValue="@null" />
     </dialog>
     <fragment
         android:id="@+id/shopCartFragment"

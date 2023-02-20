@@ -33,6 +33,7 @@ import com.example.meliapp.viewmodel.PaymentMethodsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import kotlin.math.log
 
 class DialogPaymentFragment : BottomSheetDialogFragment() {
 
@@ -42,11 +43,12 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
     private lateinit var adapterBank: PaymentBankAdapter
     private lateinit var adapterInstallments: InstallmentsAdapter
     private val args by navArgs<DialogPaymentFragmentArgs>()
-    private val price by lazy { args.price }
+    private val price by lazy { args.price}
+    private lateinit var purchase : String
     private var bank: BankItem? = null
     private var method: PaymentMethodItem? = null
     private var installments: PayerCost? = null
-    var bundlePurchase = Bundle()
+    private val bundlePurchase by lazy { Bundle() }
     private val viewModel by viewModels<PaymentMethodsViewModel>() {
         PaymentMethodsViewModel
             .PaymentViewModelFactory(
@@ -108,7 +110,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
                                 }
                             }
                             Status.ERROR -> {
-                                Log.d("TAG", "getGames: ${response.message}")
+                                Log.d("TAG", "getError: ${response.message}")
                             }
                         }
                     }
@@ -135,7 +137,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
                             }
                         }
                         Status.ERROR -> {
-                            Log.d("TAG", "getGames: ${response.message}")
+                            Log.d("TAG", "get: ${response.message}")
                         }
                     }
                 }
@@ -164,7 +166,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
                             }
                         }
                         Status.ERROR -> {
-                            Log.d("TAG", "getGames: ${response.message}")
+                            Log.d("TAG", "get error: ${response.message}")
                         }
                     }
                 }

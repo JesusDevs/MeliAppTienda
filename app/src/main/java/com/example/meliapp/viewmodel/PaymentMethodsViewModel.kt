@@ -14,16 +14,9 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import java.lang.Exception
-import java.net.HttpRetryException
 
 class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewModel() {
 
-
-    private val purchaseItem = MutableLiveData<PurchaseItem>().apply {
-        value = PurchaseItem("Soda","",102.0,"0.0",0)
-    }
-    val text: LiveData<PurchaseItem> = purchaseItem
 
     suspend fun getPaymentMethods() : StateFlow<Response<List<PaymentMethodItem>>> = flow {
         kotlin.runCatching {
