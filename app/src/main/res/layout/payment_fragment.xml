@@ -131,7 +131,7 @@
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
                 app:icon="@drawable/baseline_payments_24"
-                android:text="Selecciona un Medio de Pago"
+                android:text="@string/ir_a_pagar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addProduct" />
@@ -146,7 +146,7 @@
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
-                android:text="Agregar Producto"
+                android:text="@string/agregar_producto"
                 app:icon="@drawable/baseline_shopping_cart_checkout_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

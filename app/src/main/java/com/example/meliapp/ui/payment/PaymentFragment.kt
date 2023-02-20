@@ -60,9 +60,7 @@ class PaymentFragment : Fragment() {
     }
 
     private fun redirectDialogPayment() {
-        val bundle = Bundle()
-        recommend?.price?.let { it1 -> bundle.putInt("price", it1.toInt()) }
-        findNavController().navigate(R.id.action_paymentFragment_to_dialogPaymentFragment, bundle)
+        findNavController().navigate(R.id.action_paymentFragment_to_shopCartFragment)
     }
      private fun onBack() {
         binding.imageBack.setOnClickListener {

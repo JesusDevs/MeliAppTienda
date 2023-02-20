@@ -29,14 +29,14 @@
         android:name="com.example.meliapp.ui.payment.PaymentFragment"
         android:label="PaymentFragment"
         tools:layout="@layout/payment_fragment">
-        <action
-            android:id="@+id/action_paymentFragment_to_dialogPaymentFragment"
-            app:destination="@id/dialogPaymentFragment" />
         <argument
             android:name="product"
             app:argType="com.example.meliapp.ui.ItemProduct"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_paymentFragment_to_shopCartFragment"
+            app:destination="@id/shopCartFragment" />
     </fragment>
     <dialog
         android:id="@+id/dialogPaymentFragment"

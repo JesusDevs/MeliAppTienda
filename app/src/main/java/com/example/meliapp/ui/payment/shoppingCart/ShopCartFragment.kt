@@ -49,7 +49,6 @@ class ShopCartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.payBtn.setOnClickListener {
             redirectDialogPayment()
         }
@@ -65,6 +64,7 @@ class ShopCartFragment : Fragment() {
     }
 
     private fun redirectDialogPayment() {
+
         findNavController().navigate(R.id.action_shopCartFragment_to_dialogPaymentFragment, bundle)
     }
 
@@ -97,7 +97,6 @@ class ShopCartFragment : Fragment() {
         adapter = PaymentShopCarAdapter(items = items as MutableList<ItemProductEntity>, context)
         binding.recyclerViewItems.adapter = adapter
         binding.txAmount.text = "$ " + calculateTotal(items).toString()
-
         binding.deleteAllBtn.setOnClickListener {
             deleteAll()
             adapter.updateList(items)
