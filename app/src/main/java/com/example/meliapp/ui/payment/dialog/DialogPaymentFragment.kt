@@ -17,6 +17,7 @@ import com.example.meliapp.R
 import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.MethodDialogBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
+import com.example.meliapp.local.database.ProductDatabase
 import com.example.meliapp.model.payment.PurchaseItem
 import com.example.meliapp.model.payment.bank.BankItem
 import com.example.meliapp.model.payment.installments.InstallmentsResponseItem
@@ -50,7 +51,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
         PaymentMethodsViewModel
             .PaymentViewModelFactory(
                 PaymentMethodRepository(
-                    PaymentMethodDataSource()))
+                    PaymentMethodDataSource(),ProductDatabase.getDataBase(requireActivity()).itemProductDao()))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

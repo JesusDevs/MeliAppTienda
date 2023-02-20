@@ -29,15 +29,49 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <TextView
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/cerapro_black"
-                    android:padding="24dp"
-                    android:text="@string/what_do_you_want_to_pay"
-                    android:textAlignment="center"
-                    android:textColor="@color/black"
-                    android:textSize="20dp" />
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/imageBack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:forceHasOverlappingRendering="true"
+                        android:src="?attr/homeAsUpIndicator"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageShoppingCart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:backgroundTint="@color/teal_200"
+                        android:backgroundTintMode="src_over"
+                        android:background="@drawable/baseline_shopping_cart_checkout_24"
+                        android:src="@drawable/baseline_shopping_cart_checkout_24"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView3"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/cerapro_black"
+                        android:padding="24dp"
+                        android:text="Mi Carro de Compras"
+                        android:textAlignment="center"
+                        android:textColor="@color/black"
+                        android:textSize="20dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </com.google.android.material.card.MaterialCardView>
@@ -86,28 +120,13 @@
 
             </com.google.android.material.card.MaterialCardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView_items"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:paddingStart="0dp"
-                android:paddingEnd="15dp"
-                android:paddingBottom="15dp"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button" />
-
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/button"
+                android:id="@+id/pay_btn"
                 style="@style/MyButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
@@ -134,12 +153,17 @@
                     android:orientation="horizontal"
                     android:weightSum="1">
 
-                    <include
-                        android:id="@+id/cardItemInclude"
-                        layout="@layout/layout_item_product"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="20dp" />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/recyclerView_items"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp"
+                        android:layout_marginStart="24dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="24dp"
+                        android:paddingStart="0dp"
+                        android:paddingEnd="15dp"
+                        android:paddingBottom="15dp"
+                        android:visibility="visible" />
                 </LinearLayout>
 
 

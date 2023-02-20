@@ -1,5 +1,7 @@
 package com.example.meliapp.ui
 
+import android.content.Context
+import android.graphics.Rect
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -38,7 +40,7 @@ class FirstFragment : Fragment() {
     private var amount  :String? =null
     private val purchaseItem by lazy { args.purchase }
     private val args by navArgs<FirstFragmentArgs>()
-
+    private var activityView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getArgs()
@@ -55,10 +57,10 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.recyclerViewItems.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapter = ProductAdapter(mockAdapter(), context)
         binding.recyclerViewItems.adapter = adapter
+        //acceder al vista de la activty para modificar un elemento
 
         adapterRecommned = RecommendSliderAdapter(mockAdapter(),context,this)
         val tab =binding.include.tabLayout
@@ -75,17 +77,20 @@ class FirstFragment : Fragment() {
     private fun searchProducts() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
+
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 val list = mockAdapter().filter { it.title?.contains(newText.toString(), true) ?: false } as MutableList<ItemProduct>
                 list.forEach { Log.d("TAG", "onQueryTextChange: ${it.title}") }
+                //modificar un elemento de la vista del xml del activty
                 adapter.updateList(list)
                 adapterRecommned.updateList(list)
                 return false
             }
         })
+        //listener para escuchar el teclado y cerrar el teclado nativo
     }
 
     private fun transform() : ViewPager2.PageTransformer {
@@ -129,6 +134,26 @@ class FirstFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        activityView = activity?.findViewById<View>(R.id.bottom_app_bar)
+
+        view?.viewTreeObserver?.addOnGlobalLayoutListener {
+            val r = Rect()
+            view?.getWindowVisibleDisplayFrame(r)
+            val screenHeight = requireView().rootView.height
+            val keypadHeight = screenHeight - r.bottom
+
+            if (keypadHeight > screenHeight * 0.15) {
+                // El teclado está activado
+                activityView?.visibility = View.GONE
+            } else {
+                // El teclado está oculto
+                activityView?.visibility = View.VISIBLE
+            }
+        }
+
+    }
     private fun displayToastPurchase() {
         if (arguments != null && !amount.equals("0.0")) {
             //handler postdelayed para que se ejecute despues de que se cargue la vista
