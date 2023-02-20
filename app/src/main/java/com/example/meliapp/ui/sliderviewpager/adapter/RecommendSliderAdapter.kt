@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.meliapp.R
 import com.example.meliapp.databinding.LayoutItemProductBinding
 import com.example.meliapp.ui.FirstFragmentDirections
 import com.example.meliapp.ui.ItemProduct

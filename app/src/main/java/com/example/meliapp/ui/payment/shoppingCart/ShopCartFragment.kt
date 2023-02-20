@@ -18,7 +18,9 @@ import com.example.meliapp.databinding.ShopCartFragmentBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.local.database.ProductDatabase
 import com.example.meliapp.local.entity.ItemProductEntity
+import com.example.meliapp.model.payment.PurchaseItem
 import com.example.meliapp.repository.PaymentMethodRepository
+import com.example.meliapp.ui.FirstFragmentDirections
 import com.example.meliapp.ui.payment.adapter.PaymentShopCarAdapter
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
 import com.google.gson.Gson
@@ -30,6 +32,7 @@ class ShopCartFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: PaymentShopCarAdapter
     private val bundle = Bundle()
+
     private val viewModel by viewModels<PaymentMethodsViewModel>() {
         PaymentMethodsViewModel
             .PaymentViewModelFactory(
@@ -64,9 +67,8 @@ class ShopCartFragment : Fragment() {
     }
 
     private fun redirectDialogPayment() {
-
         findNavController().navigate(R.id.action_shopCartFragment_to_dialogPaymentFragment, bundle)
-    }
+ }
 
     private fun getShoppingCart(){
         lifecycleScope.launch {
@@ -95,6 +97,18 @@ class ShopCartFragment : Fragment() {
     private fun displayShopCart(items: List<ItemProductEntity>) {
         binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
         adapter = PaymentShopCarAdapter(items = items as MutableList<ItemProductEntity>, context)
+        //recorrer listado para obtener todos los nombres de los productos en un listado
+        var list = mutableListOf<String>()
+        for (item in items) {
+            //agregar a un listado
+            item.title?.let {
+                list.add(it)
+            }
+           //de bundle a objeto args enviar a dialog
+            bundle.putString("list", Gson().toJson(list))
+
+        }
+
         binding.recyclerViewItems.adapter = adapter
         binding.txAmount.text = "$ " + calculateTotal(items).toString()
         binding.deleteAllBtn.setOnClickListener {
@@ -108,10 +122,17 @@ class ShopCartFragment : Fragment() {
     }
     fun calculateTotal(items: List<ItemProductEntity>): Int {
         var total = 0
+        var list = mutableListOf<String>()
         for (item in items) {
+            //agregar a un listado
+            item.title?.let {
+                list.add(it)
+            }
             total += item.total ?: 0
         }
         bundle.putInt("price", total)
+        bundle.putString("list", Gson().toJson(list))
+
         return total
     }
     override fun onDestroyView() {

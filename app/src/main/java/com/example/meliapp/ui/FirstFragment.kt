@@ -1,7 +1,10 @@
 package com.example.meliapp.ui
 
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Rect
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -11,6 +14,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.os.HandlerCompat.postDelayed
 import androidx.navigation.fragment.navArgs
@@ -71,6 +75,19 @@ class FirstFragment : Fragment() {
         viewPager.addItemDecoration(decoration!!)
         searchProducts()
     }
+    fun dialogPurchase(context: Context?, amount: String, payment: String, installments: String, namebank: String) {
+
+            val builder = context?.let { AlertDialog.Builder(it) }
+            builder?.setTitle("Gracias por tu compra")
+        //salto de linea strings strings
+            builder?.setMessage("Total Pagado: $amount\nTarjeta : $payment \nCuotas : $installments\nBanco: $namebank")
+            builder?.setCancelable(false)
+            builder?.setIcon(R.drawable.icon_app)
+            builder?.setPositiveButton("Salir") { dialog: DialogInterface, _: Int ->
+                dialog.dismiss()
+            }
+            builder?.show()
+        }
 
     private fun searchProducts() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
@@ -123,6 +140,7 @@ class FirstFragment : Fragment() {
             installments = it.getString("installments")
             payment = it.getString("payment")
             amount = it.getDouble("amount", 0.0).toString()
+
         }
     }
 
@@ -130,6 +148,12 @@ class FirstFragment : Fragment() {
         if (arguments != null && !amount.equals("0.0")) {
             //handler postdelayed para que se ejecute despues de que se cargue la vista
             Handler(Looper.getMainLooper()).postDelayed({
+                dialogPurchase(
+                    context,
+                    amount = amount!!,
+                    payment = payment!!,
+                    installments = installments!!,
+                    namebank = namebank!!)
                 Toast.makeText(
                     context,
                     "monto pagado : " + amount + "\n" +
