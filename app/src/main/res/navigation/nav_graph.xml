@@ -57,7 +57,11 @@
     </dialog>
     <fragment
         android:id="@+id/shopCartFragment"
-        android:name="com.example.meliapp.ui.payment.ShopCartFragment"
+        android:name="com.example.meliapp.ui.payment.shoppingCart.ShopCartFragment"
         android:label="ShopCartFragment"
-        tools:layout="@layout/shop_cart_fragment"/>
+        tools:layout="@layout/shop_cart_fragment">
+        <action
+            android:id="@+id/action_shopCartFragment_to_dialogPaymentFragment"
+            app:destination="@id/dialogPaymentFragment" />
+    </fragment>
 </navigation>

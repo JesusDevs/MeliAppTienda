@@ -122,6 +122,22 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/pay_btn"
+                style="@style/MyButtonThemePayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                android:fontFamily="@font/cerapro_black"
+                android:letterSpacing="0.13"
+                app:icon="@drawable/baseline_payments_24"
+                android:text="@string/selecciona_un_medio_de_pago"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardItem" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/delete_all_btn"
                 style="@style/MyButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,10 +146,11 @@
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
-                android:text="Selecciona un Medio de Pago"
+                app:icon="@drawable/baseline_auto_delete_24"
+                android:text="@string/eliminar_carro_de_compras"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardItem" />
+                app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardItem"
@@ -156,13 +173,12 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView_items"
                         android:layout_width="match_parent"
-                        android:layout_height="300dp"
-                        android:layout_marginStart="24dp"
+                        android:layout_height="350dp"
                         android:layout_marginTop="8dp"
-                        android:layout_marginEnd="24dp"
                         android:paddingStart="0dp"
-                        android:paddingEnd="15dp"
+                        android:paddingHorizontal="10dp"
                         android:paddingBottom="15dp"
+                        android:scrollbars="vertical"
                         android:visibility="visible" />
                 </LinearLayout>
 

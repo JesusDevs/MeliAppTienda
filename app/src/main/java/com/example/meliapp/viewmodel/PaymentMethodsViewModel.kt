@@ -79,6 +79,12 @@ class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewM
         started = WhileSubscribed(5000), // Or Lazily because it's a one-shot
         initialValue = Response.loading(data = null)
     )
+
+    fun deleteAllProducts(list: List<ItemProductEntity>){
+        viewModelScope.launch(Dispatchers.IO){
+            repo.deleteAllProducts(list)
+        }
+    }
     fun insertProduct(product: ItemProductEntity){
         viewModelScope.launch(Dispatchers.IO){
             repo.insertProduct(product)

@@ -33,14 +33,12 @@ class FirstFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var adapter: ProductAdapter
     private lateinit var adapterRecommned: RecommendSliderAdapter
-    private var adm :AdministradorPreferencias? = null
     private var namebank :String? =null
     private var installments  :String? =null
     private var payment :String? =null
     private var amount  :String? =null
     private val purchaseItem by lazy { args.purchase }
     private val args by navArgs<FirstFragmentArgs>()
-    private var activityView: View? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getArgs()
@@ -57,11 +55,11 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+     /*  listado de objetos no destacados
         binding.recyclerViewItems.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         adapter = ProductAdapter(mockAdapter(), context)
         binding.recyclerViewItems.adapter = adapter
-        //acceder al vista de la activty para modificar un elemento
-
+*/
         adapterRecommned = RecommendSliderAdapter(mockAdapter(),context,this)
         val tab =binding.include.tabLayout
         val viewPager = binding.include.viewpager2
@@ -77,20 +75,15 @@ class FirstFragment : Fragment() {
     private fun searchProducts() {
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
                 return false
             }
-
             override fun onQueryTextChange(newText: String?): Boolean {
                 val list = mockAdapter().filter { it.title?.contains(newText.toString(), true) ?: false } as MutableList<ItemProduct>
-                list.forEach { Log.d("TAG", "onQueryTextChange: ${it.title}") }
-                //modificar un elemento de la vista del xml del activty
                 adapter.updateList(list)
                 adapterRecommned.updateList(list)
                 return false
             }
         })
-        //listener para escuchar el teclado y cerrar el teclado nativo
     }
 
     private fun transform() : ViewPager2.PageTransformer {
@@ -110,7 +103,7 @@ class FirstFragment : Fragment() {
 
     fun mockAdapter(): MutableList<ItemProduct> {
          var  postItems: MutableList<ItemProduct> = mutableListOf()
-          postItems.add(ItemProduct("1", "Soda Estereo, ",13000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo","Me verás volver"))
+          postItems.add(ItemProduct("1", "Soda Estereo ",13000,"https://www.spirit-of-rock.com/les%20goupes/S/Soda%20Stereo/pics/490551_logo.jpg","nuevo","Me verás volver"))
           postItems.add(ItemProduct("2", "Kuervos del sur ",15500,"https://pbs.twimg.com/media/EISqOeyXsAAUgx7.jpg","nuevo","El Vuelo Del Pillán"))
           postItems.add(ItemProduct("3", "Kuervos del sur ",12200,"https://vinilogarage.cl/wp-content/uploads/2021/05/190452520_10157802063250940_886593049488731790_n.jpg","nuevo","Canto a lo Brujo"))
           postItems.add(ItemProduct("4", "Muse ",11000,"https://www.lahiguera.net/musicalia/artistas/muse/disco/9294/muse_simulation_theory-portada.jpg","nuevo","Simulation Theory"))
@@ -134,26 +127,6 @@ class FirstFragment : Fragment() {
         }
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        activityView = activity?.findViewById<View>(R.id.bottom_app_bar)
-
-        view?.viewTreeObserver?.addOnGlobalLayoutListener {
-            val r = Rect()
-            view?.getWindowVisibleDisplayFrame(r)
-            val screenHeight = requireView().rootView.height
-            val keypadHeight = screenHeight - r.bottom
-
-            if (keypadHeight > screenHeight * 0.15) {
-                // El teclado está activado
-                activityView?.visibility = View.GONE
-            } else {
-                // El teclado está oculto
-                activityView?.visibility = View.VISIBLE
-            }
-        }
-
-    }
     private fun displayToastPurchase() {
         if (arguments != null && !amount.equals("0.0")) {
             //handler postdelayed para que se ejecute despues de que se cargue la vista

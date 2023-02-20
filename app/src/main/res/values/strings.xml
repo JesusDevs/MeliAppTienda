@@ -14,4 +14,8 @@
     <string name="mercado_pago">Mercado Pago</string>
     <string name="payment_successo">"Pago realizado con éxito"</string>
     <string name="ir_a_pagar">Ir a Pagar</string>
+    <string name="eliminar_carro_de_compras">Eliminar Carro de Compras</string>
+    <string name="selecciona_un_medio_de_pago">Selecciona un Medio de Pago</string>
+    <string name="agregar_producto">Agregar Producto</string>
+    <string name="recomendados">Recomendados</string>
 </resources>
