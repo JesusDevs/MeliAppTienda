@@ -79,10 +79,7 @@ class FirstFragment : Fragment() {
             }
             override fun onQueryTextChange(newText: String?): Boolean {
                 val list = mockAdapter().filter { it.title?.contains(newText.toString(), true) ?: false } as MutableList<ItemProduct>
-                if (!newText.isNullOrEmpty()) {
-                    adapterRecommned.updateList(list)
-                    return false
-                }
+                adapterRecommned.updateList(list)
                 return false
             }
         })
