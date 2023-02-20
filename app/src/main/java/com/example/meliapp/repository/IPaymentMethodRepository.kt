@@ -16,6 +16,6 @@ interface IPaymentMethodRepository {
     //base de datos room
      suspend fun insertProduct(productItem: ItemProductEntity)
     suspend fun getAllShoppingCart(): List<ItemProductEntity>
-    suspend fun deleteAllProducts( list : List<ItemProductEntity>)
+    suspend fun deleteAllProducts()
 
 }

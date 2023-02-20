@@ -99,13 +99,13 @@ class ShopCartFragment : Fragment() {
         binding.txAmount.text = "$ " + calculateTotal(items).toString()
 
         binding.deleteAllBtn.setOnClickListener {
-            deleteAll(items)
+            deleteAll()
             adapter.updateList(items)
         }
     }
 
-    private fun deleteAll(list: List<ItemProductEntity>) {
-        viewModel.deleteAllProducts(list)
+    private fun deleteAll() {
+        viewModel.deleteAllProducts()
     }
     fun calculateTotal(items: List<ItemProductEntity>): Int {
         var total = 0

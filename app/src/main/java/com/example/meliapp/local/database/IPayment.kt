@@ -9,11 +9,10 @@ import com.example.meliapp.model.payment.method.PaymentMethodItem
 interface IPayment {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertItemProduct(itemProductEntity: ItemProductEntity)
-
     @Delete
      suspend fun deleteItemProduct(itemProductEntity: ItemProductEntity)
-     @Delete
-     suspend fun deleteAllItemProduct(itemProductEntity: List<ItemProductEntity>)
+     @Query("DELETE FROM item_product")
+     suspend fun deleteAllItemProduct()
 
     @Query("SELECT * FROM item_product")
     fun getAllItemProducts(): List<ItemProductEntity>

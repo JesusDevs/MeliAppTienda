@@ -80,9 +80,9 @@ class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewM
         initialValue = Response.loading(data = null)
     )
 
-    fun deleteAllProducts(list: List<ItemProductEntity>){
+    fun deleteAllProducts(){
         viewModelScope.launch(Dispatchers.IO){
-            repo.deleteAllProducts(list)
+            repo.deleteAllProducts()
         }
     }
     fun insertProduct(product: ItemProductEntity){
