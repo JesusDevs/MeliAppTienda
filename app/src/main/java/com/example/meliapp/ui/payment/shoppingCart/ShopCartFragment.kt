@@ -52,7 +52,7 @@ class ShopCartFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.payBtn.setOnClickListener {
+        binding.fragmentOption.cardCredit.setOnClickListener {
             redirectDialogPayment()
         }
        //desplegar carro de compras

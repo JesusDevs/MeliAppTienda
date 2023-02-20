@@ -9,16 +9,18 @@
     tools:context=".ui.FirstFragment">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent">
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView"
@@ -40,6 +42,8 @@
                         android:layout_marginStart="8dp"
                         android:forceHasOverlappingRendering="true"
                         android:src="?attr/homeAsUpIndicator"
+                        android:backgroundTint="@color/black"
+                        android:backgroundTintMode="src_atop"
                         app:layout_constraintBottom_toBottomOf="@+id/textView3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -49,10 +53,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="16dp"
-                        android:backgroundTint="@color/teal_200"
-                        android:backgroundTintMode="src_over"
+                        android:backgroundTint="@color/black"
                         android:background="@drawable/baseline_shopping_cart_checkout_24"
-                        android:src="@drawable/baseline_shopping_cart_checkout_24"
                         app:layout_constraintBottom_toBottomOf="@+id/textView3"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -80,12 +82,11 @@
                 android:id="@+id/cardAmount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+                app:layout_constraintTop_toBottomOf="@+id/delete_all_btn">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,47 +122,29 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/pay_btn"
-                style="@style/MyButtonThemePayment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/cerapro_black"
-                android:letterSpacing="0.13"
-                app:icon="@drawable/baseline_payments_24"
-                android:text="@string/selecciona_un_medio_de_pago"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardItem" />
-
-            <com.google.android.material.button.MaterialButton
                 android:id="@+id/delete_all_btn"
                 style="@style/MyButtonTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
-                app:icon="@drawable/baseline_auto_delete_24"
                 android:text="@string/eliminar_carro_de_compras"
+                app:icon="@drawable/baseline_auto_delete_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pay_btn" />
+                app:layout_constraintTop_toBottomOf="@+id/cardItem" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cardAmount">
+                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -173,10 +156,10 @@
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerView_items"
                         android:layout_width="match_parent"
-                        android:layout_height="350dp"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:paddingStart="0dp"
                         android:paddingHorizontal="10dp"
+                        android:paddingStart="0dp"
                         android:paddingBottom="15dp"
                         android:scrollbars="vertical"
                         android:visibility="visible" />
@@ -184,6 +167,22 @@
 
 
             </com.google.android.material.card.MaterialCardView>
+
+            <include
+                android:id="@+id/fragment_option"
+                layout="@layout/card_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cardAmount" />
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
