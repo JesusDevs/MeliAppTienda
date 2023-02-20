@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginBottom="60dp"
     tools:context=".ui.FirstFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -130,8 +131,8 @@
                 android:layout_marginEnd="24dp"
                 android:fontFamily="@font/cerapro_black"
                 android:letterSpacing="0.13"
-                app:icon="@drawable/baseline_payments_24"
                 android:text="@string/ir_a_pagar"
+                app:icon="@drawable/baseline_payments_24"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addProduct" />
@@ -156,8 +157,8 @@
                 android:id="@+id/cardItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cardAmount">
@@ -170,7 +171,7 @@
                     android:layout_margin="20dp" />
             </com.google.android.material.card.MaterialCardView>
 
-             </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

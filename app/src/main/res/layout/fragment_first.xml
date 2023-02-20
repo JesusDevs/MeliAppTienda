@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     app:iconifiedByDefault="false"
                     app:queryBackground="@android:color/transparent"
-                    app:queryHint="Busca acá..." />
+                    app:queryHint="Buscar producto..." />
 
             </com.google.android.material.card.MaterialCardView>
 
