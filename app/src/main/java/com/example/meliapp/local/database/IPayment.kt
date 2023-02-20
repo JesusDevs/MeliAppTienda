@@ -12,6 +12,8 @@ interface IPayment {
 
     @Delete
      suspend fun deleteItemProduct(itemProductEntity: ItemProductEntity)
+     @Delete
+     suspend fun deleteAllItemProduct(itemProductEntity: List<ItemProductEntity>)
 
     @Query("SELECT * FROM item_product")
     fun getAllItemProducts(): List<ItemProductEntity>

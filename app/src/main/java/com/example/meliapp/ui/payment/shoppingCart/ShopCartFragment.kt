@@ -1,4 +1,4 @@
-package com.example.meliapp.ui.payment
+package com.example.meliapp.ui.payment.shoppingCart
 
 import android.os.Bundle
 import android.util.Log
@@ -10,7 +10,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.meliapp.R
 import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.ShopCartFragmentBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
@@ -27,6 +29,7 @@ class ShopCartFragment : Fragment() {
     private var _binding: ShopCartFragmentBinding? = null
     private val binding get() = _binding!!
     private lateinit var adapter: PaymentShopCarAdapter
+    private val bundle = Bundle()
     private val viewModel by viewModels<PaymentMethodsViewModel>() {
         PaymentMethodsViewModel
             .PaymentViewModelFactory(
@@ -52,12 +55,17 @@ class ShopCartFragment : Fragment() {
         }
        //desplegar carro de compras
         getShoppingCart()
+        onBack()
+    }
+
+    private fun onBack() {
         binding.imageBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 
     private fun redirectDialogPayment() {
+        findNavController().navigate(R.id.action_shopCartFragment_to_dialogPaymentFragment, bundle)
     }
 
     private fun getShoppingCart(){
@@ -70,11 +78,7 @@ class ShopCartFragment : Fragment() {
                             Status.LOADING -> { }
                             Status.SUCCESS -> {
                                 response.data?.let { items ->
-                                    Log.d(  "TAG", "getGames: ${items}" + Gson().toJson(items))
-                                    binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
-                                    adapter = PaymentShopCarAdapter(items = items, context)
-                                    binding.recyclerViewItems.adapter = adapter
-                                    binding.txAmount.text= "$ "+ calculateTotal(items).toString()
+                                    displayShopCart(items)
                                 }
                             }
 
@@ -87,11 +91,28 @@ class ShopCartFragment : Fragment() {
             }
         }
     }
+
+    private fun displayShopCart(items: List<ItemProductEntity>) {
+        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
+        adapter = PaymentShopCarAdapter(items = items as MutableList<ItemProductEntity>, context)
+        binding.recyclerViewItems.adapter = adapter
+        binding.txAmount.text = "$ " + calculateTotal(items).toString()
+
+        binding.deleteAllBtn.setOnClickListener {
+            deleteAll(items)
+            adapter.updateList(items)
+        }
+    }
+
+    private fun deleteAll(list: List<ItemProductEntity>) {
+        viewModel.deleteAllProducts(list)
+    }
     fun calculateTotal(items: List<ItemProductEntity>): Int {
         var total = 0
         for (item in items) {
             total += item.total ?: 0
         }
+        bundle.putInt("price", total)
         return total
     }
     override fun onDestroyView() {

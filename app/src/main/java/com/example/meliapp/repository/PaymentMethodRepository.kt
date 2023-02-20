@@ -42,4 +42,9 @@ class PaymentMethodRepository(private val dataSource: PaymentMethodDataSource,pr
             dao.getAllItemProducts()
         }
     }
+    override suspend fun deleteAllProducts( list : List<ItemProductEntity>) {
+        return withContext(Dispatchers.IO) {
+            dao.deleteAllItemProduct(list)
+        }
+    }
 }

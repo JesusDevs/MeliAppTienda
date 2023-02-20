@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -18,13 +19,13 @@ import com.example.meliapp.repository.PaymentMethodRepository
 import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.ui.payment.adapter.PaymentShopCarAdapter
 import com.example.meliapp.utils.loadImgShop
+import com.example.meliapp.utils.showCustomToast
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
 
 class PaymentFragment : Fragment() {
 
     private var _binding: PaymentFragmentBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: PaymentShopCarAdapter
     private val args by navArgs<PaymentFragmentArgs>()
     private val recommend by lazy { args.product }
     private val viewModel by viewModels<PaymentMethodsViewModel>() {
@@ -47,15 +48,15 @@ class PaymentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        onBack()
         displayView()
-        binding.button.setOnClickListener {
-            insertItem(recommend!!)
+        binding.selectedPayment.setOnClickListener {
             redirectDialogPayment()
         }
-       /* //desplegar carro de compras
-        binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
-        adapter = PaymentShopCarAdapter(mockAdapter(), context)
-        binding.recyclerViewItems.adapter = adapter*/
+        binding.addProduct.setOnClickListener {
+            Toast(requireContext()).showCustomToast("Producto agregado al carrito",requireActivity())
+            insertItem(recommend!!)
+        }
     }
 
     private fun redirectDialogPayment() {
@@ -63,7 +64,11 @@ class PaymentFragment : Fragment() {
         recommend?.price?.let { it1 -> bundle.putInt("price", it1.toInt()) }
         findNavController().navigate(R.id.action_paymentFragment_to_dialogPaymentFragment, bundle)
     }
-
+     private fun onBack() {
+        binding.imageBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
+    }
     private fun insertItem(productEntity: ItemProduct) {
         viewModel.insertProduct(
             ItemProductEntity(
