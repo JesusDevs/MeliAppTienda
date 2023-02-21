@@ -1,10 +1,13 @@
 package com.example.meliapp.ui.payment.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.meliapp.R
 import com.example.meliapp.databinding.MethodItemBinding
 import com.example.meliapp.model.payment.method.PaymentMethodItem
 import com.example.meliapp.utils.loadGif
@@ -43,11 +46,12 @@ class PaymentMethodAdapter(
           selectedPosition: (Int) -> Unit
       ) {
             with(binding) {
-
                 if (selected == adapterPosition){
-                    chekIv.setImageResource(android.R.drawable.checkbox_on_background)
+                    materialCardView3.strokeWidth = 2
+                    materialCardView3.strokeColor = context?.getColor( R.color.teal_200) ?: 0
                 } else {
-                    chekIv.setImageResource(android.R.drawable.checkbox_off_background)
+                    materialCardView3.strokeWidth = 0
+                    materialCardView3.strokeColor = context?.getColor( com.google.android.material.R.color.mtrl_btn_transparent_bg_color) ?: 0
                 }
                 item.thumbnail?.let { urlImg ->
                     if (item.thumbnail.isNotEmpty()) {
