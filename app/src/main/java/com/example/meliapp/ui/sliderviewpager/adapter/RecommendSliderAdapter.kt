@@ -13,7 +13,7 @@ import com.example.meliapp.ui.ItemProduct
 import com.example.meliapp.utils.loadImg
 
 
-class RecommendSliderAdapter(private val items: MutableList<ItemProduct>, private val context: Context?,val frg: Fragment?) : RecyclerView.Adapter<RecommendSliderAdapter.ViewHolder>() {
+class RecommendSliderAdapter(private val items: MutableList<ItemProduct>,val frg: Fragment?) : RecyclerView.Adapter<RecommendSliderAdapter.ViewHolder>() {
     private val newListBenefcios: List<ItemProduct> = items
     private var selectedItem = MutableLiveData<ItemProduct>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +41,6 @@ class RecommendSliderAdapter(private val items: MutableList<ItemProduct>, privat
             item.thumbnail?.let { binding.sliderItemImg.loadImg(it) }
 
             binding.sliderItemBtn.setOnClickListener {
-                //enviar objeto a la siguiente pantalla
                 selectedItem.value = item
                 val action = FirstFragmentDirections.actionFirstFragmentToPaymentFragment(selectedItem.value!!)
                 frg?.findNavController()?.navigate(action)

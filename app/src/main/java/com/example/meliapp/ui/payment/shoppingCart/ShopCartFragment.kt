@@ -39,9 +39,6 @@ class ShopCartFragment : Fragment() {
                 PaymentMethodRepository(
                     PaymentMethodDataSource(), ProductDatabase.getDataBase(requireActivity()).itemProductDao()))
     }
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,7 +65,7 @@ class ShopCartFragment : Fragment() {
 
     private fun redirectDialogPayment() {
         findNavController().navigate(R.id.action_shopCartFragment_to_dialogPaymentFragment, bundle)
- }
+    }
 
     private fun getShoppingCart(){
         lifecycleScope.launch {
@@ -83,7 +80,6 @@ class ShopCartFragment : Fragment() {
                                     displayShopCart(items)
                                 }
                             }
-
                             Status.ERROR -> {
                                 Log.d("TAG", "items: ${response.message}")
                             }
@@ -96,7 +92,7 @@ class ShopCartFragment : Fragment() {
 
     private fun displayShopCart(items: List<ItemProductEntity>) {
         binding.recyclerViewItems.layoutManager = LinearLayoutManager(context)
-        adapter = PaymentShopCarAdapter(items = items as MutableList<ItemProductEntity>, context)
+        adapter = PaymentShopCarAdapter(items = items as MutableList<ItemProductEntity>)
         //recorrer listado para obtener todos los nombres de los productos en un listado
         var list = mutableListOf<String>()
         for (item in items) {
@@ -124,7 +120,6 @@ class ShopCartFragment : Fragment() {
         var total = 0
         var list = mutableListOf<String>()
         for (item in items) {
-            //agregar a un listado
             item.title?.let {
                 list.add(it)
             }

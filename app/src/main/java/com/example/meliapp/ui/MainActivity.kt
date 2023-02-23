@@ -37,7 +37,6 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_YES -> {
-                // Night mode is active, we're using dark theme
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
             }
         }
@@ -67,36 +66,19 @@ class MainActivity : AppCompatActivity() {
             binding.content.fabAddWord.isActivated = false
             binding.content.btnSecondFav.isActivated = true
         }
-        binding.content.btnSecondFav.setOnClickListener {
+           binding.content.btnSecondFav.setOnClickListener {
            Toast.makeText(this, "Aquí estaran los Favoritos", Toast.LENGTH_SHORT).show()
             binding.content.btnHome.isActivated = true
             binding.content.fabAddWord.isActivated = true
         }
     }
 
-    //crear funcion para escuchar cuando se levanta un teclado de android
-
-
-    //cuando se levanta el teclado, se oculta el bottom nav bar
-    //cuando se baja el teclado, se vuelve a mostrar el bottom nav bar
-
-    private fun hideBottomNavBar() {
-
-    }
-
-    private fun showBottomNavBar() {
-
-    }
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)

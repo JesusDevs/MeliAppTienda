@@ -2,13 +2,9 @@ package com.example.meliapp.ui
 
 import android.content.Context
 import android.content.DialogInterface
-import android.content.Intent
-import android.graphics.Rect
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,18 +12,11 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.HandlerCompat.postDelayed
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.viewpager2.widget.ViewPager2
-import cl.wom.transformacion.appwommobile.beneficios.adapter.HorizontalMarginItemDecoration
+import com.example.meliapp.ui.sliderviewpager.adapter.HorizontalMarginItemDecoration
 import com.example.meliapp.R
 import com.example.meliapp.databinding.FragmentFirstBinding
-import com.example.meliapp.model.payment.PurchaseItem
-import com.example.meliapp.ui.sliderviewpager.adapter.ProductAdapter
 import com.example.meliapp.ui.sliderviewpager.adapter.RecommendSliderAdapter
-import com.example.meliapp.utils.AdministradorPreferencias
-import com.example.meliapp.utils.CacheUtilShared
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlin.math.abs
 
@@ -35,14 +24,11 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-    private lateinit var adapter: ProductAdapter
     private lateinit var adapterRecommned: RecommendSliderAdapter
     private var namebank :String? =null
     private var installments  :String? =null
     private var payment :String? =null
     private var amount  :String? =null
-    private val purchaseItem by lazy { args.purchase }
-    private val args by navArgs<FirstFragmentArgs>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getArgs()
@@ -59,12 +45,7 @@ class FirstFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-     /*  listado de objetos no destacados
-        binding.recyclerViewItems.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        adapter = ProductAdapter(mockAdapter(), context)
-        binding.recyclerViewItems.adapter = adapter
-*/
-        adapterRecommned = RecommendSliderAdapter(mockAdapter(),context,this)
+        adapterRecommned = RecommendSliderAdapter(mockAdapter(),this)
         val tab =binding.include.tabLayout
         val viewPager = binding.include.viewpager2
         viewPager.adapter = adapterRecommned
@@ -79,7 +60,6 @@ class FirstFragment : Fragment() {
 
             val builder = context?.let { AlertDialog.Builder(it) }
             builder?.setTitle("Gracias por tu compra")
-        //salto de linea strings strings
             builder?.setMessage("Total Pagado: $amount\nTarjeta : $payment \nCuotas : $installments\nBanco: $namebank")
             builder?.setCancelable(false)
             builder?.setIcon(R.drawable.icon_app)
@@ -104,15 +84,11 @@ class FirstFragment : Fragment() {
 
     private fun transform() : ViewPager2.PageTransformer {
         val nextItemVisiblePx = resources.getDimension(R.dimen.viewpager_next_item_visible)
-        val currentItemHorizontalMarginPx =
-            resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
+        val currentItemHorizontalMarginPx = resources.getDimension(R.dimen.viewpager_current_item_horizontal_margin)
         val pageTranslationX = nextItemVisiblePx + currentItemHorizontalMarginPx
         val pageTransformer = ViewPager2.PageTransformer { page: View, position: Float ->
             page.translationX = -pageTranslationX * position
-            // cambio de tamaño item siguiente
             page.scaleY = 1 - (0.25f * abs(position))
-            // efecto de difuminado en los items
-            //  page.alpha = 0.25f + (1 - abs(position))
         }
         return pageTransformer
     }
@@ -146,7 +122,6 @@ class FirstFragment : Fragment() {
 
     private fun displayToastPurchase() {
         if (arguments != null && !amount.equals("0.0")) {
-            //handler postdelayed para que se ejecute despues de que se cargue la vista
             Handler(Looper.getMainLooper()).postDelayed({
                 dialogPurchase(
                     context,

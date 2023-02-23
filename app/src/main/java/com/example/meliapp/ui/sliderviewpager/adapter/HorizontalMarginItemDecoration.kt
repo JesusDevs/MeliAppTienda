@@ -1,4 +1,4 @@
-package cl.wom.transformacion.appwommobile.beneficios.adapter
+package com.example.meliapp.ui.sliderviewpager.adapter
 
 import android.content.Context
 import android.graphics.Rect

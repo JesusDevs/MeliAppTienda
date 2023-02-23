@@ -9,7 +9,6 @@ object OkHttpOneShot: OkHttpClient() {
         return super.newBuilder()
     }
     override fun hashCode(): Int {
-        Log.d("RetrofitApiBuilder", "instancia: ${super.hashCode()}")
         return super.hashCode()
     }
 }

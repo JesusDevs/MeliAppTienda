@@ -17,11 +17,9 @@ import com.example.meliapp.utils.loadSvgReco
 
 class PaymentBankAdapter(
     private val items: List<BankItem>,
-    private val context: Context?,
     private val selectedListener: (BankItem) -> Unit
 ) : RecyclerView.Adapter<PaymentBankAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<BankItem>()
-    fun selectedItem()=selectedItem
     private val itemsList: List<BankItem> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(MethodBankItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }

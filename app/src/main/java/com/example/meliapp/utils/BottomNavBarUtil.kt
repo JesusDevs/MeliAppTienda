@@ -12,16 +12,6 @@ import com.example.meliapp.databinding.ActivityMainBinding
 
 class BottomNavBarUtil {
     companion object {
-        fun getBottomNavBarHeight(activity: Activity): Int {
-            val resources = activity.resources
-            val resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android")
-            return if (resourceId > 0) {
-                resources.getDimensionPixelSize(resourceId)
-            } else {
-                0
-            }
-        }
-
         fun hideBottomNav(binding: ActivityMainBinding ,context: Context ) {
             val activityRootView: View = binding.root
             activityRootView.viewTreeObserver.addOnGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener {
@@ -33,7 +23,6 @@ class BottomNavBarUtil {
                 }
             })
         }
-
         private fun dpToPx(context: Context, valueInDp: Int): Float {
             val metrics = context.resources.displayMetrics
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp.toFloat(), metrics)

@@ -30,7 +30,6 @@ class PaymentMethodAdapter(
         val items = itemsList[position]
         holder.bindItems(items,selectedListener,selectedPosition)
     }
-
     override fun getItemCount(): Int {
         return itemsList.size
     }
@@ -70,13 +69,9 @@ class PaymentMethodAdapter(
                     selectedPosition(adapterPosition)
                     selectedListener(item)
                     notifyItemChanged(adapterPosition)
-
-
                 }
             }
-
         }
-
     }
 
-    }
+}

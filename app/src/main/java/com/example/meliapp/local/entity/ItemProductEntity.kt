@@ -14,6 +14,4 @@ data class ItemProductEntity(
     val quantity: Int?,
     val favorite: Boolean = false,
     val total : Int? = price?.times(quantity ?: 0)
-){
-
-}
+)

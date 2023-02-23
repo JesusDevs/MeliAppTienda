@@ -16,8 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class PaymentMethodsViewModel(private val repo: IPaymentMethodRepository): ViewModel() {
-
-
+    
     suspend fun getPaymentMethods() : StateFlow<Response<List<PaymentMethodItem>>> = flow {
         kotlin.runCatching {
             repo.getPaymentMethods()

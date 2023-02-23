@@ -18,7 +18,6 @@ import com.example.meliapp.core.status.Status
 import com.example.meliapp.databinding.MethodDialogBinding
 import com.example.meliapp.datasource.PaymentMethodDataSource
 import com.example.meliapp.local.database.ProductDatabase
-import com.example.meliapp.model.payment.PurchaseItem
 import com.example.meliapp.model.payment.bank.BankItem
 import com.example.meliapp.model.payment.installments.InstallmentsResponseItem
 import com.example.meliapp.model.payment.installments.PayerCost
@@ -27,13 +26,11 @@ import com.example.meliapp.repository.PaymentMethodRepository
 import com.example.meliapp.ui.payment.adapter.InstallmentsAdapter
 import com.example.meliapp.ui.payment.adapter.PaymentBankAdapter
 import com.example.meliapp.ui.payment.adapter.PaymentMethodAdapter
-import com.example.meliapp.utils.AdministradorPreferencias
 import com.example.meliapp.utils.showCustomToast
 import com.example.meliapp.viewmodel.PaymentMethodsViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 class DialogPaymentFragment : BottomSheetDialogFragment() {
 
@@ -44,7 +41,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
     private lateinit var adapterInstallments: InstallmentsAdapter
     private val args by navArgs<DialogPaymentFragmentArgs>()
     private val price by lazy { args.price}
-    private lateinit var purchase : String
     private var bank: BankItem? = null
     private var method: PaymentMethodItem? = null
     private var installments: PayerCost? = null
@@ -54,13 +50,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
             .PaymentViewModelFactory(
                 PaymentMethodRepository(
                     PaymentMethodDataSource(),ProductDatabase.getDataBase(requireActivity()).itemProductDao()))
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-           price?.let {
-               Log.d("price", "onCreate: $it")
-           }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -94,7 +83,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
     private fun getPaymentMethods() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.getPaymentMethods().collectLatest { result ->
+                viewModel.getPaymentMethods().collect { result ->
                     result.let { response ->
                         when (response.status) {
                             Status.LOADING -> {}
@@ -182,10 +171,8 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
      */
     private fun displayPaymentMethods(list: List<PaymentMethodItem>) {
         val listFilter = list as MutableList<PaymentMethodItem>
-
         //eliminar de la lista los que no son credit_card
         listFilter.removeIf { it.paymentTypeId != "credit_card" }
-
         binding.recyclerViewItems.layoutManager = GridLayoutManager(context, 5)
         adapter = PaymentMethodAdapter(items = listFilter, context = context,
             selectedListener = { select -> onItemSelected(select) },
@@ -198,7 +185,7 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
         val listFilterBank = listbank as MutableList<BankItem>
         listFilterBank.let { it -> it.removeIf { filtro -> filtro.thumbnail!!.contains("gif") } }
         binding.recyclerViewBank.layoutManager = GridLayoutManager(context, 2)
-        adapterBank = PaymentBankAdapter(listFilterBank, context) { select ->
+        adapterBank = PaymentBankAdapter(listFilterBank) { select ->
             onBankSelected(select)
         }
 
@@ -211,7 +198,6 @@ class DialogPaymentFragment : BottomSheetDialogFragment() {
         binding.recyclerViewInstalments.layoutManager = GridLayoutManager(context, 2)
         adapterInstallments = InstallmentsAdapter(
             items = listPayerCost,
-            context = context,
             selectedListener = { select -> onInstallmentSelected(select) },
             selectedPosition = { position -> onInstallmentPosition(position) })
         binding.recyclerViewInstalments.adapter = adapterInstallments

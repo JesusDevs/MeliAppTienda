@@ -12,9 +12,7 @@ import com.example.meliapp.utils.loadGif
 import com.example.meliapp.utils.loadImgShop
 import com.example.meliapp.utils.loadSvgReco
 
-class PaymentShopCarAdapter(private val items: MutableList<ItemProductEntity>, private val context: Context?) : RecyclerView.Adapter<PaymentShopCarAdapter.ViewHolder>() {
-    private var selectedItem = MutableLiveData<ItemProduct>()
-    fun selectedItem()=selectedItem
+class PaymentShopCarAdapter(private val items: MutableList<ItemProductEntity>) : RecyclerView.Adapter<PaymentShopCarAdapter.ViewHolder>() {
     private var itemsList: List<ItemProductEntity> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(ShopCarItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }

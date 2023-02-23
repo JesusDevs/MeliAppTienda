@@ -20,13 +20,11 @@ import com.example.meliapp.utils.loadSvgReco
 
 class InstallmentsAdapter(
     private val items: List<PayerCost>,
-    private val context: Context?,
     private val selectedListener: (PayerCost) -> Unit,
     private var selectedPosition: (Int)->Unit
 ) : RecyclerView.Adapter<InstallmentsAdapter.ViewHolder>() {
     private var selectedItem = MutableLiveData<PayerCost>()
     private var selected = -1
-    fun selectedItem()=selectedItem
     private val itemsList: List<PayerCost> =items
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(InstallmentsItemBinding.inflate(LayoutInflater.from(parent.context),parent,false)) }
